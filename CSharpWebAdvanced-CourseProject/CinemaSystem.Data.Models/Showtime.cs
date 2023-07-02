@@ -18,7 +18,7 @@ namespace CinemaSystem.Data.Models
         public DateTime StartTime { get; set; }
 
         [Required]
-        [Precision(18,2)]
+        [Precision(5,2)]
         public decimal TicketPrice { get; set; }
 
         [Required]

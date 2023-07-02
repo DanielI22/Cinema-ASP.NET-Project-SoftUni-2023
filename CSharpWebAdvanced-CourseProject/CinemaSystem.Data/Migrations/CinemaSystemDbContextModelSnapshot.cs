@@ -114,6 +114,29 @@ namespace CinemaSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cinemas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Varna Dubrovnik 8",
+                            ImageUrl = "/cinemaImages/cinemaniaVarna.jpg",
+                            Name = "Cinemania Varna"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Sofia 33",
+                            ImageUrl = "/cinemaImages/cinemaniaSofia.jpg",
+                            Name = "Cinemania Sofia"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Plovdiv 15",
+                            ImageUrl = "/cinemaImages/cinemaniaPlovdiv.jpg",
+                            Name = "Cinemania Plovid"
+                        });
                 });
 
             modelBuilder.Entity("CinemaSystem.Data.Models.Genre", b =>
@@ -132,6 +155,28 @@ namespace CinemaSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Biography"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Drama"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Adventure"
+                        });
                 });
 
             modelBuilder.Entity("CinemaSystem.Data.Models.Movie", b =>
@@ -160,6 +205,24 @@ namespace CinemaSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            Description = "As Harvard student Mark Zuckerberg creates the social networking site that would become known as Facebook, he is sued by the twins who claimed he stole their idea and by the co-founder who was later squeezed out of the business.",
+                            PosterImageUrl = "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+                            ReleaseYear = 2010,
+                            Title = "The Social Network"
+                        },
+                        new
+                        {
+                            Id = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            Description = "Archaeologist Indiana Jones races against time to retrieve a legendary artifact that can change the course of history.",
+                            PosterImageUrl = "https://m.media-amazon.com/images/M/MV5BNDJhODYxYzItOGIwZC00ZTBiLTlmN2MtMjM2MzQyZDVkMGM4XkEyXkFqcGdeQXVyMTUzMDA3Mjc2._V1_SX300.jpg",
+                            ReleaseYear = 2023,
+                            Title = "Indiana Jones and the Dial of Destiny"
+                        });
                 });
 
             modelBuilder.Entity("CinemaSystem.Data.Models.MovieGenre", b =>
@@ -175,6 +238,28 @@ namespace CinemaSystem.Data.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("MovieGenre");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            GenreId = 1
+                        },
+                        new
+                        {
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            GenreId = 3
+                        },
+                        new
+                        {
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            GenreId = 4
+                        });
                 });
 
             modelBuilder.Entity("CinemaSystem.Data.Models.Review", b =>
@@ -221,8 +306,8 @@ namespace CinemaSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TicketPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -231,6 +316,200 @@ namespace CinemaSystem.Data.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("Showtimes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CinemaId = 1,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CinemaId = 1,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CinemaId = 1,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CinemaId = 1,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CinemaId = 2,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CinemaId = 2,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CinemaId = 2,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CinemaId = 2,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CinemaId = 3,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CinemaId = 3,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CinemaId = 3,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CinemaId = 3,
+                            MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CinemaId = 1,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CinemaId = 1,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CinemaId = 1,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CinemaId = 1,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CinemaId = 2,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CinemaId = 2,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CinemaId = 2,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CinemaId = 2,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CinemaId = 3,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CinemaId = 3,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 15m
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CinemaId = 3,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CinemaId = 3,
+                            MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
+                            StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            TicketPrice = 12m
+                        });
                 });
 
             modelBuilder.Entity("CinemaSystem.Data.Models.Ticket", b =>
@@ -240,8 +519,8 @@ namespace CinemaSystem.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("SeatNumber")
                         .IsRequired()

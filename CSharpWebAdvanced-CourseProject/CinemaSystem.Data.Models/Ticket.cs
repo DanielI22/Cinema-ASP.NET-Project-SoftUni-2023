@@ -15,7 +15,7 @@ namespace CinemaSystem.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [Precision(18, 2)]
+        [Precision(5, 2)]
         public decimal Price { get; set; }
 
         [Required]
