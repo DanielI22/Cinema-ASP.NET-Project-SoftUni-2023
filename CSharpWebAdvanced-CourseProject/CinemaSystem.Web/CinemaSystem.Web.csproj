@@ -15,4 +15,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CinemaSystem.Common\CinemaSystem.Common.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Data.Models\CinemaSystem.Data.Models.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Data\CinemaSystem.Data.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Web.ViewModels\CinemaSystem.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
