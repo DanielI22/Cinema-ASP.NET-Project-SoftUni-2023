@@ -22,7 +22,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
 
 builder.Services.AddApplicationServices(typeof(ICinemaService));
 
-builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 WebApplication app = builder.Build();
@@ -37,6 +36,18 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+    {
+        context.Response.Clear();
+        context.Request.Path = "/";
+        await next();
+    }
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

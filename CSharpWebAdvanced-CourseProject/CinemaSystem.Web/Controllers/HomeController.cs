@@ -1,5 +1,6 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
+    using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,18 @@
     [Authorize]
     public class HomeController : Controller
     {
-        [AllowAnonymous]
-        public IActionResult Index()
+        private readonly IMovieService movieService;
+
+        public HomeController(IMovieService movieService)
         {
-            TempData[ErrorMessage] = "Error test!";
-            return View();
+            this.movieService = movieService;
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<MovieCardViewModel> movieCards = await movieService.GetAllMoviesCardAsync();
+            return View(movieCards);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

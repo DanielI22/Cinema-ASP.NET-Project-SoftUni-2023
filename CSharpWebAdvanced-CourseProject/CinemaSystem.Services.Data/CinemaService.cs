@@ -14,10 +14,5 @@
         {
             this.dbContext = dbContext;
         }
-
-        public async Task<ICollection<CinemaIndexViewModel>> GetAllCinemasAsync()
-        {
-            return null;
-        }
     }
 }

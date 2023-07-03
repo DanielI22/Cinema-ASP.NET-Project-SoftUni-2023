@@ -2,7 +2,8 @@
 {
     using CinemaSystem.Web.ViewModels.Home;
 
-    public interface ICinemaService
+    public interface IMovieService
     {
+        Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync();
     }
 }
