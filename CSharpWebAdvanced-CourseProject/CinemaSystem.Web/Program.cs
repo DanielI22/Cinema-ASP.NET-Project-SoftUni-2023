@@ -1,5 +1,7 @@
 using CinemaSystem.Data.Models;
+using CinemaSystem.Services.Data.Interfaces;
 using CinemaSystem.Web.Data;
+using CinemaSystem.Web.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -17,7 +19,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 })
     .AddEntityFrameworkStores<CinemaSystemDbContext>();
+
+builder.Services.AddApplicationServices(typeof(ICinemaService));
+
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 WebApplication app = builder.Build();
 

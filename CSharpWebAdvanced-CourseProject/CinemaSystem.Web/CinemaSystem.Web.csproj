@@ -19,6 +19,8 @@
     <ProjectReference Include="..\CinemaSystem.Common\CinemaSystem.Common.csproj" />
     <ProjectReference Include="..\CinemaSystem.Data.Models\CinemaSystem.Data.Models.csproj" />
     <ProjectReference Include="..\CinemaSystem.Data\CinemaSystem.Data.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Services.Data\CinemaSystem.Services.Data.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Web.Infrastructure\CinemaSystem.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CinemaSystem.Web.ViewModels\CinemaSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 

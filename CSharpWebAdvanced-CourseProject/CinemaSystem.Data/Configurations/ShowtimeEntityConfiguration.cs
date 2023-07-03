@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using CinemaSystem.Data.Models;
-
-namespace CinemaSystem.Data.Configurations
+﻿namespace CinemaSystem.Data.Configurations
 {
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Microsoft.EntityFrameworkCore;
+    using CinemaSystem.Data.Models;
+
     public class ShowtimeEntityConfiguration : IEntityTypeConfiguration<Showtime>
     {
         public void Configure(EntityTypeBuilder<Showtime> builder)

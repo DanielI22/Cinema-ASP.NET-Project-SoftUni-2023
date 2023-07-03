@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using CinemaSystem.Data.Models;
-
-namespace CinemaSystem.Data.Configurations
+﻿namespace CinemaSystem.Data.Configurations
 {
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Microsoft.EntityFrameworkCore;
+    using CinemaSystem.Data.Models;
+
     public class TicketEntityConfiguration : IEntityTypeConfiguration<Ticket>
     {
         public void Configure(EntityTypeBuilder<Ticket> builder)

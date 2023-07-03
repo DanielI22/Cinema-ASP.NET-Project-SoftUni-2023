@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CinemaSystem.Data.Models
+﻿namespace CinemaSystem.Data.Models
 {
     public class MovieGenre
     {

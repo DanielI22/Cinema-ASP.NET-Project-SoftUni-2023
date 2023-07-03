@@ -1,9 +1,9 @@
-﻿using CinemaSystem.Data.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-
-namespace CinemaSystem.Data.Configurations
+﻿namespace CinemaSystem.Data.Configurations
 {
+    using CinemaSystem.Data.Models;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Microsoft.EntityFrameworkCore;
+
     public class ReviewEntityConfiguration : IEntityTypeConfiguration<Review>
     {
         public void Configure(EntityTypeBuilder<Review> builder)

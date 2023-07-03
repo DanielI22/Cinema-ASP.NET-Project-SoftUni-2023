@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static CinemaSystem.Common.EntityValidationConstants.Genre;
-
-namespace CinemaSystem.Data.Models
+﻿namespace CinemaSystem.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using static CinemaSystem.Common.EntityValidationConstants.Genre;
+
     public class Genre
     {
         public Genre()

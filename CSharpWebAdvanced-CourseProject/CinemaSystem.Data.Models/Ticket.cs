@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-
-namespace CinemaSystem.Data.Models
+﻿namespace CinemaSystem.Data.Models
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.EntityFrameworkCore;
+
     public class Ticket
     {
         public Ticket()

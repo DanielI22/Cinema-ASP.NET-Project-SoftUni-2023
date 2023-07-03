@@ -1,13 +1,19 @@
-﻿using CinemaSystem.Web.ViewModels.Home;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace CinemaSystem.Web.Controllers
+﻿namespace CinemaSystem.Web.Controllers
 {
+    using CinemaSystem.Web.ViewModels.Home;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+	using System.Diagnostics;
+
+	using static CinemaSystem.Common.NotificationMessagesConstants; 
+
+    [Authorize]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            TempData[ErrorMessage] = "Error test!";
             return View();
         }
 

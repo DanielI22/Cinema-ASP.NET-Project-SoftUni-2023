@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static CinemaSystem.Common.EntityValidationConstants.Movie;
-
-namespace CinemaSystem.Data.Models
+﻿namespace CinemaSystem.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using static CinemaSystem.Common.EntityValidationConstants.Movie;
+
     public class Movie
     {
         public Movie()

@@ -1,11 +1,11 @@
-﻿using CinemaSystem.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-
-namespace CinemaSystem.Web.Data
+﻿namespace CinemaSystem.Web.Data
 {
+    using CinemaSystem.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using System.Reflection;
+
     public class CinemaSystemDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public CinemaSystemDbContext(DbContextOptions<CinemaSystemDbContext> options)
