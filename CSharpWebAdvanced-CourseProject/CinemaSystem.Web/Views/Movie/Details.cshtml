@@ -1,0 +1,51 @@
+﻿@model MovieDetailsViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title">
+        </div>
+        <div class="col-md-8">
+            <h2>@Model.Title</h2>
+            <p>Release Year: @Model.ReleaseYear</p>
+            <p>Genre: @string.Join(", ", @Model.Genres)</p>
+            <p>Description: @Model.Description</p>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div>
+                    <h4>Add Review</h4>
+                    <form asp-controller="Review" asp-action="Post" asp-route-movieId="@Model.Id" method="post">
+                        <textarea asp-for="@Model.ReviewToAdd" class="form-control" placeholder="Write your review"></textarea>
+                        <span asp-validation-for="@Model.ReviewToAdd" class="text-danger"></span><br />
+                        <div class="d-flex justify-content-end">
+                             <button class="btn btn-secondary" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            }
+            <div>
+                <h4>Reviews</h4>
+                <ul>
+                @foreach (var review in Model.Reviews)
+                {
+                    <li>
+                        <h5>@review.ReviewAuthor</h5>
+                        <p>@review.ReviewText</p>
+                    </li>
+                }
+                </ul>
+            </div>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <p>Please sign in to add your own review.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

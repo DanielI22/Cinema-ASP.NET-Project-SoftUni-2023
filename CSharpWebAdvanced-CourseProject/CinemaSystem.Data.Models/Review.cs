@@ -29,5 +29,8 @@
         [Required]
         [MaxLength(TextMaxLength)]
         public string ReviewText { get; set; } = null!;
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }
