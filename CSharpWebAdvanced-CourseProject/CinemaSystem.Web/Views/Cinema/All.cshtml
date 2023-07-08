@@ -1,0 +1,19 @@
+﻿<div class="container">
+    <h1>Our Cinemas</h1>
+    <div class="row">
+        @foreach (var cinema in Model)
+        {
+            <div class="col-md-4">
+                <a class="text-decoration-none text-muted" asp-controller="Showtime" asp-action="Details" asp-route-id="@cinema.Id">
+                    <div class="card mb-4">
+                        <img src="@cinema.ImageUrl" class="card-img-top" alt="Cinema Image" />
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">@cinema.Name</h5>
+                            <p class="card-text text-muted">@cinema.Address</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
