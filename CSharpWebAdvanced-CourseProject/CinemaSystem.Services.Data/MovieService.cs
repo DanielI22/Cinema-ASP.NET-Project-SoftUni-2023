@@ -47,6 +47,8 @@
                 Reviews = m.Reviews.OrderByDescending(r => r.CreatedOn)
                 .Select(r => new ReviewViewModel
                 {
+                    ReviewId = r.Id,
+                    CreatorId = r.UserId,
                     ReviewAuthor = r.User.UserName,
                     ReviewText = r.ReviewText
                 }),

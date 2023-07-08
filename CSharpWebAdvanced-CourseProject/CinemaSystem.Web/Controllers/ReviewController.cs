@@ -1,5 +1,6 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
+    using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Authorization;
@@ -36,6 +37,24 @@
                 TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
             }
 
+            return RedirectToAction("Details", "Movie", new { id = movieId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMy(Guid reviewId, Guid movieId)
+        {
+            try
+            {
+                Guid userId = User.GetId();
+                if(await reviewService.IsReviewCreatorAsync(reviewId, userId))
+                {
+                    await reviewService.DeleteReviewAsync(reviewId);
+                }
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "Your Review could not be deleted. Sorry for the inconvenience!";
+            }
             return RedirectToAction("Details", "Movie", new { id = movieId });
         }
     }
