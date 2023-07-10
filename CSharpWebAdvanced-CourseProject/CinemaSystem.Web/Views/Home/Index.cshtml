@@ -1,4 +1,8 @@
-﻿<section class="hero">
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero">
     <div class="container mb-5 text-center">
         <h1>Welcome to Cinemania</h1>
         <h2> Here you can experience the best movie experience in Bulgaria</h2>
@@ -15,6 +19,6 @@
         </div>
     </div>
     <div class="text-center">
-        <a asp-controller="Cinema" asp-action="All" class="btn btn-secondary btn-lg text-center mt-3">Book Tickets</a>
+        <a asp-controller="Cinema" asp-action="All" class="btn btn-secondary btn-lg text-center mt-3 position-relative">Book Tickets</a>
     </div>    
 </section>

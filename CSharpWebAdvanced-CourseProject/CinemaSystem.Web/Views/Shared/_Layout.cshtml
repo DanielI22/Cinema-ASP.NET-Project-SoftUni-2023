@@ -1,6 +1,4 @@
-﻿@using static CinemaSystem.Common.GeneralApplicationConstants;
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Movies</a>
+                        <a class="nav-link" asp-controller="Movie" asp-action="All">Movies</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Cinema" asp-action="All">Showtimes</a>

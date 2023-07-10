@@ -6,6 +6,9 @@
     public interface IMovieService
     {
         Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync();
+
         Task<MovieDetailsViewModel?> GetNewMovieDetailsModelAsync(Guid id);
+
+        Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string searchName, int selectedGenreId);
     }
 }

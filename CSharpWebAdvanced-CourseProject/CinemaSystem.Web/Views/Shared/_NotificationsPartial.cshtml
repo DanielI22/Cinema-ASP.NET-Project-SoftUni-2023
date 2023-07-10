@@ -1,5 +1,4 @@
-﻿@using static CinemaSystem.Common.NotificationMessagesConstants;
-
+﻿
 @if (TempData.ContainsKey(ErrorMessage))
 {
 	<script>toastr.error(`@TempData[ErrorMessage]`);</script>

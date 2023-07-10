@@ -2,9 +2,11 @@
 {
     using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
+    using CinemaSystem.Web.ViewModels.Home;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections;
     using static CinemaSystem.Common.NotificationMessagesConstants;
 
 
@@ -12,10 +14,12 @@
     public class MovieController : Controller
     {
         private readonly IMovieService movieService;
+        private readonly IGenreService genreService;
 
-        public MovieController(IMovieService movieService)
+        public MovieController(IMovieService movieService, IGenreService genreService)
         {
             this.movieService = movieService;
+            this.genreService = genreService;
         }
 
         [AllowAnonymous]
@@ -30,5 +34,23 @@
 
             return View(model);
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> All(string searchName, int selectedGenreId)
+        {
+            IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(searchName, selectedGenreId);
+            IEnumerable <GenreViewModel> genres = await genreService.GetGenresAsync();
+
+            var viewModel = new MoviesViewModel
+            {
+                Movies = movies,
+                Genres = genres,
+                SearchName = searchName,
+                SelectedGenreId = selectedGenreId
+            };
+
+            return View(viewModel);
+        }
+
     }
 }

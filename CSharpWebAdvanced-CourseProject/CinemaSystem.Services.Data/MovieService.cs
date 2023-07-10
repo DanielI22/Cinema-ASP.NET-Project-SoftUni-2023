@@ -19,6 +19,28 @@
         {
             this.dbContext = dbContext;
         }
+
+        public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string searchName, int selectedGenreId)
+        {
+            IEnumerable<MovieCardViewModel> allMovies = await GetAllMoviesCardAsync();
+
+            // Filter by searchName
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                allMovies = allMovies.Where(m => m.Title.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // Filter by selectedGenre
+            if (selectedGenreId != 0)
+            {
+                allMovies = allMovies
+                    .Where(m => m.Genres.Any(g => g.Id == selectedGenreId))
+                    .ToList();
+            }
+
+            return allMovies;
+        }
+
         public async Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync()
         {
             return await dbContext.Movies
