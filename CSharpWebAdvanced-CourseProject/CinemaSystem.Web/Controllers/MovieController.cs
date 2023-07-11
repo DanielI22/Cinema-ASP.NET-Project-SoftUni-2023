@@ -36,20 +36,37 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> All(string searchName, int selectedGenreId)
+        public async Task<IActionResult> All([FromQuery] MoviesViewModel moviesViewModel)
         {
-            IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(searchName, selectedGenreId);
-            IEnumerable <GenreViewModel> genres = await genreService.GetGenresAsync();
+            IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(moviesViewModel.SearchName, moviesViewModel.SelectedGenreId);
+            IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
 
             var viewModel = new MoviesViewModel
             {
                 Movies = movies,
                 Genres = genres,
-                SearchName = searchName,
-                SelectedGenreId = selectedGenreId
+                SearchName = moviesViewModel.SearchName,
+                SelectedGenreId = moviesViewModel.SelectedGenreId
             };
 
             return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Clear()
+        {
+            IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();
+            IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
+
+            var viewModel = new MoviesViewModel
+            {
+                Movies = movies,
+                Genres = genres,
+                SearchName = null,
+                SelectedGenreId = 0
+            };
+
+            return RedirectToAction(nameof(All));
         }
 
     }

@@ -20,7 +20,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string searchName, int selectedGenreId)
+        public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId)
         {
             IEnumerable<MovieCardViewModel> allMovies = await GetAllMoviesCardAsync();
 
@@ -44,11 +44,18 @@
         public async Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync()
         {
             return await dbContext.Movies
+                .Include(m => m.MovieGenres)
+                .ThenInclude(mg => mg.Genre)
                 .Select(m => new MovieCardViewModel
                 {
                     Id = m.Id,
                     Title = m.Title,
-                    PosterUrl = m.PosterImageUrl
+                    PosterUrl = m.PosterImageUrl,
+                    Genres = m.MovieGenres.Select(mg => new GenreViewModel
+                    {
+                        Id = mg.GenreId,
+                        Name = mg.Genre.Name
+                    })
                 }).ToListAsync();
         }
 
