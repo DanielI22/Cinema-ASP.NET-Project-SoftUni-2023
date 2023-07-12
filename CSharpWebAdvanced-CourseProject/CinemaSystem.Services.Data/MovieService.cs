@@ -14,10 +14,12 @@
     public class MovieService : IMovieService
     {
         private readonly CinemaSystemDbContext dbContext;
+        private readonly IReviewService reviewService;
 
-        public MovieService(CinemaSystemDbContext dbContext)
+        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService)
         {
             this.dbContext = dbContext;
+            this.reviewService = reviewService;
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId)
@@ -59,10 +61,13 @@
                 }).ToListAsync();
         }
 
-        public async Task<MovieDetailsViewModel?> GetNewMovieDetailsModelAsync(Guid id)
+        public async Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(Guid movieId, int pageNumber, int pageSize)
         {
-            return await dbContext.Movies
-            .Where(m => m.Id == id)
+            var reviews = await reviewService.GetMovieReviewsPerPageAsync(movieId, pageNumber, pageSize);
+            var totalReviews = await reviewService.GetTotalMovieReviwsCount(movieId);
+
+             MovieDetailsViewModel? movieModel = await dbContext.Movies
+            .Where(m => m.Id == movieId)
             .Include(m => m.Reviews)
             .Include(m => m.MovieGenres)
             .ThenInclude(mg => mg.Genre)
@@ -73,16 +78,23 @@
                 Description = m.Description,
                 ReleaseYear = m.ReleaseYear,
                 Genres = m.MovieGenres.Select(mg => mg.Genre.Name),
-                Reviews = m.Reviews.OrderByDescending(r => r.CreatedOn)
-                .Select(r => new ReviewViewModel
-                {
-                    ReviewId = r.Id,
-                    CreatorId = r.UserId,
-                    ReviewAuthor = r.User.UserName,
-                    ReviewText = r.ReviewText
-                }),
-                PosterUrl = m.PosterImageUrl
+                PosterUrl = m.PosterImageUrl,
+                TotalReviews = totalReviews,
+                CurrentPage = pageNumber,
+                PageSize = pageSize
             }).FirstOrDefaultAsync();
+
+            if(movieModel == null)
+            {
+                throw new InvalidOperationException("Movie not found!");
+            }
+
+            movieModel.Reviews = reviews;
+            movieModel.TotalReviews = totalReviews;
+            movieModel.CurrentPage = pageNumber;
+            movieModel.PageSize = pageSize;
+
+            return movieModel;
         }
     }
 }

@@ -6,8 +6,8 @@
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections;
     using static CinemaSystem.Common.NotificationMessagesConstants;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
 
 
     [Authorize]
@@ -23,9 +23,9 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid movieId, int pageNumber = 1, int pageSize = ReviewsPerPage)
         {
-            MovieDetailsViewModel? model = await movieService.GetNewMovieDetailsModelAsync(id);
+            MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(movieId, pageNumber, pageSize);
             if (model == null)
             {
                 TempData[ErrorMessage] = "Your Movie could not be found!";

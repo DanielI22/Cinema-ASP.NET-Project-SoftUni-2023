@@ -7,7 +7,7 @@
     {
         Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync();
 
-        Task<MovieDetailsViewModel?> GetNewMovieDetailsModelAsync(Guid id);
+        Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(Guid id, int pageNumber, int pageSize);
 
         Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId);
     }
