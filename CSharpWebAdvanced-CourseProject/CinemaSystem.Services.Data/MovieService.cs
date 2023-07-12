@@ -64,7 +64,7 @@
         public async Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(Guid movieId, int pageNumber, int pageSize)
         {
             var reviews = await reviewService.GetMovieReviewsPerPageAsync(movieId, pageNumber, pageSize);
-            var totalReviews = await reviewService.GetTotalMovieReviwsCount(movieId);
+            var totalReviews = await reviewService.GetTotalMovieReviewsCount(movieId);
 
              MovieDetailsViewModel? movieModel = await dbContext.Movies
             .Where(m => m.Id == movieId)
@@ -86,7 +86,7 @@
 
             if(movieModel == null)
             {
-                throw new InvalidOperationException("Movie not found!");
+                throw new InvalidOperationException("Error loading movie!");
             }
 
             movieModel.Reviews = reviews;

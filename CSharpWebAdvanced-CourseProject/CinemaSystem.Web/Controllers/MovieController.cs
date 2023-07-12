@@ -23,9 +23,9 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(Guid movieId, int pageNumber = 1, int pageSize = ReviewsPerPage)
+        public async Task<IActionResult> Details(Guid id, int pageNumber = 1, int pageSize = ReviewsPerPage)
         {
-            MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(movieId, pageNumber, pageSize);
+            MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(id, pageNumber, pageSize);
             if (model == null)
             {
                 TempData[ErrorMessage] = "Your Movie could not be found!";

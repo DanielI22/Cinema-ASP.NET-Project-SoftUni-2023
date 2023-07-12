@@ -12,6 +12,6 @@
         Task PostReviewAsync(Guid movieId, Guid userId, string reviewText);
         Task<bool> IsReviewCreatorAsync(Guid reviewId, Guid userId);
         Task<IEnumerable<ReviewViewModel>> GetMovieReviewsPerPageAsync(Guid movieId, int pageNumber, int pageSize);
-        Task<int> GetTotalMovieReviwsCount(Guid movieId);
+        Task<int> GetTotalMovieReviewsCount(Guid movieId);
     }
 }

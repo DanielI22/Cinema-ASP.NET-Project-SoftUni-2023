@@ -92,7 +92,7 @@
             return paginatedReviewViewModels;
         }
 
-        public async Task<int> GetTotalMovieReviwsCount(Guid movieId)
+        public async Task<int> GetTotalMovieReviewsCount(Guid movieId)
         {
             return await dbContext.Reviews.Where(r => r.MovieId.Equals(movieId)).CountAsync();
         }

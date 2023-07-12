@@ -37,7 +37,7 @@
                 TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
             }
 
-            return RedirectToAction("Details", "Movie", new { movieId = movieId });
+            return RedirectToAction("Details", "Movie", new { id = movieId });
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@
             {
                 TempData[ErrorMessage] = "Your Review could not be deleted. Sorry for the inconvenience!";
             }
-            return RedirectToAction("Details", "Movie", new { movieId = movieId });
+            return RedirectToAction("Details", "Movie", new { id = movieId });
         }
     }
 }
