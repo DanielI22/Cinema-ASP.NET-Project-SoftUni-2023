@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MovieCardViewModel>
+
+<div id="movieCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        @{
+            var movies = Model.ToList();
+            var itemCount = movies.Count;
+            var currentIndex = 0;
+            var itemsPerSlide = 4;
+            var slideCount = (int)Math.Ceiling((double)itemCount / itemsPerSlide);
+
+            for (int i = 0; i < slideCount; i++)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row">
+                        @for (int j = currentIndex; j < currentIndex + itemsPerSlide; j++)
+                        {
+                            if (j < itemCount)
+                            {
+                                var movie = movies[j];
+                                <partial name="_MovieCardPartial" model="@movie" />
+                            }
+                        }
+                    </div>
+                </div>
+
+                currentIndex += itemsPerSlide;
+            }
+        }
+    </div>
+
+    <a class="carousel-control-prev" href="#movieCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#movieCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+</div>
+
+<style>
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        color: #fff;
+        padding: 10px;
+        font-size: 24px;
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background-color: rgba(50, 0, 0, 0.2);
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#movieCarousel').carousel();
+
+        $('.carousel-control-next').click(function (e) {
+            e.preventDefault();
+            $('#movieCarousel').carousel('next');
+        });
+
+        $('.carousel-control-prev').click(function (e) {
+            e.preventDefault();
+            $('#movieCarousel').carousel('prev');
+        });
+    });
+</script>
+
+
+
+
+
+
+

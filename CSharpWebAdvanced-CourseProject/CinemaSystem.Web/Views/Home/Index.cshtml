@@ -12,10 +12,11 @@
     <div class="container">
         <h2>Now Showing</h2>
         <div class="row d-flex align-items-end">
-            @foreach (var movie in Model)
-            {
-                <partial name="_MovieCardPartial", model="@movie"/>
-            }
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_MovieCarousel" model="@Model" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="text-center">
