@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 Not Found</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 24px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+            .image-container img {
+                max-width: 400px;
+                height: auto;
+            }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+            .button-container a {
+                display: inline-block;
+                background-color: #dc3545;
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 18px;
+                transition: background-color 0.3s;
+            }
+
+                .button-container a:hover {
+                    background-color: #c82333;
+                }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>404 Not Found</h1>
+        <p>The requested page could not be found.</p>
+        <div class="image-container">
+            <img src="https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=2000" alt="Error 404" />
+        </div>
+        <div class="button-container">
+            <a href="/" title="Go to Homepage">Go to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 	using System.Diagnostics;
 
@@ -24,9 +25,13 @@
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (statusCode == 400 || statusCode == 404)
+            {
+                return this.View("Error404");
+            }
+            return View();
         }
     }
 }

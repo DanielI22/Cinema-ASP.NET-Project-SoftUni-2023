@@ -2,6 +2,7 @@ using CinemaSystem.Data.Models;
 using CinemaSystem.Services.Data.Interfaces;
 using CinemaSystem.Web.Data;
 using CinemaSystem.Web.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
 
 builder.Services.AddApplicationServices(typeof(ICinemaService));
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+}); ;
 
 WebApplication app = builder.Build();
 
@@ -33,21 +38,12 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
     app.UseHsts();
 }
 
-app.Use(async (context, next) =>
-{
-    await next();
-
-    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
-    {
-        context.Response.Clear();
-        context.Request.Path = "/";
-        await next();
-    }
-});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
