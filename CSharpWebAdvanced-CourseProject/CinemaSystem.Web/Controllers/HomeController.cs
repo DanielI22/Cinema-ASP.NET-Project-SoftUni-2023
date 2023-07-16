@@ -1,11 +1,11 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Home;
+    using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-	using System.Diagnostics;
+    using System.Diagnostics;
 
     [Authorize]
     public class HomeController : Controller

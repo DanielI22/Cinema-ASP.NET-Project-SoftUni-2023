@@ -7,7 +7,7 @@
         @foreach (var cinema in Model)
         {
             <div class="col-md-4">
-                <a class="text-decoration-none text-muted" asp-controller="Showtime" asp-action="Details" asp-route-id="@cinema.Id">
+                <a class="text-decoration-none text-muted" asp-controller="Showtime" asp-action="Select" asp-route-cinemaId="@cinema.Id">
                     <div class="card mb-4">
                         <img src="@cinema.ImageUrl" class="card-img-top" alt="Cinema Image" />
                         <div class="card-body">

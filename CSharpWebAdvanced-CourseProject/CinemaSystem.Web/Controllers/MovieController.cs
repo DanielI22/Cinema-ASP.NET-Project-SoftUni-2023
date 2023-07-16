@@ -2,7 +2,6 @@
 {
     using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Home;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

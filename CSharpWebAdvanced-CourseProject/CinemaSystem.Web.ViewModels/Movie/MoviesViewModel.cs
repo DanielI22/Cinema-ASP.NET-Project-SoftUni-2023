@@ -1,7 +1,5 @@
 ﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
-    using CinemaSystem.Web.ViewModels.Home;
-
     public class MoviesViewModel
     {
         public IEnumerable<MovieCardViewModel> Movies { get; set; } = null!;

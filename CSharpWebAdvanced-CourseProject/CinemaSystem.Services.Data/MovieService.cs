@@ -3,7 +3,6 @@
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels;
-    using CinemaSystem.Web.ViewModels.Home;
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Review;
     using Microsoft.EntityFrameworkCore;
@@ -20,6 +19,24 @@
         {
             this.dbContext = dbContext;
             this.reviewService = reviewService;
+        }
+
+        public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<Guid> movieIds)
+        {
+           return await dbContext.Movies
+           .Where(m => movieIds.Contains(m.Id))
+           .Select(m => new MovieCardViewModel
+           {
+               Id = m.Id,
+               Title = m.Title,
+               PosterUrl = m.PosterImageUrl,
+               Genres = m.MovieGenres.Select(mg => new GenreViewModel
+               {
+                   Id = mg.GenreId,
+                   Name = mg.Genre.Name
+               })
+           })
+           .ToListAsync();
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId)

@@ -1,7 +1,5 @@
-﻿namespace CinemaSystem.Web.ViewModels.Home
+﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
-    using CinemaSystem.Web.ViewModels.Movie;
-
     public class MovieCardViewModel
     {
         public Guid Id { get; set; }
