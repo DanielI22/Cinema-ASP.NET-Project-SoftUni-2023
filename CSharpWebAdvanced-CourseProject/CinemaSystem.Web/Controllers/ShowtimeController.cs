@@ -41,7 +41,7 @@
                 IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, selectedDate);
 
                 viewModel.Movies = movies;
-                viewModel.SelectedDate = viewModel.SelectedDate;
+                viewModel.SelectedDate = selectedDate.ToShortDateString();
             }
 
             IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);

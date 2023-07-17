@@ -1,6 +1,6 @@
 ﻿@model MovieCardViewModel
 
-<div class="col-md-3">
+
     <a class="text-decoration-none text-muted" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
     <div class="card bg-dark">
         <img src="@Model.PosterUrl" class="card-img" alt="@Model.Title">
@@ -10,4 +10,3 @@
         </div>
     </div>
     </a>
-</div>

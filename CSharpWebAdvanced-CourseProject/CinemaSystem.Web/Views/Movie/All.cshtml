@@ -37,7 +37,9 @@
         {
             foreach (var movie in Model.Movies)
             {
+                <div class="col-md-3">
                 <partial name="_MovieCardPartial" , model="@movie" />
+                </div>
             }
         }
         else {

@@ -18,7 +18,9 @@
                             if (j < itemCount)
                             {
                                 var movie = movies[j];
-                                <partial name="_MovieCardPartial" model="@movie" />
+                                <div class="col-md-3">
+                                    <partial name="_MovieCardPartial" model="@movie" />
+                                </div>
                             }
                         }
                     </div>

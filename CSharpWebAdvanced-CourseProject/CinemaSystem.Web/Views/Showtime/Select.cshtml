@@ -9,7 +9,7 @@
             <form method="post" asp-route-cinemaId="@Model.CinemaId" asp-action="Select">
                 <div class="form-group">
                     <label for="selectedDate">Select Date:</label>
-                    <select id="selectedDate" name="selectedDate" class="form-control">
+                    <select id="selectedDate" name="selectedDate" class="form-control" asp-for="@Model.SelectedDate">
                         @foreach (var date in Model.Dates)
                         {
                             <option value="@date">@date.ToShortDateString()</option>
@@ -26,23 +26,39 @@
     {
         <h4>Showtimes for @Model.SelectedDate</h4>
     }
-        @foreach (var movieShowtime in Model.Movies)
-        {
-        <div class="row">
-
-            <div class="col-md-6 col-lg-6 mb-4">
-                <partial name="_MovieCardPartial" model="@movieShowtime.MovieCard" />
-            </div>
-                <div class="col-md-6 col-lg-6 mt-2">
-                    @foreach (var showtime in movieShowtime.Showtimes)
-                    {
-                        <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice">
-                            @showtime.StartTime
-                        </div>
-                    }
-                </div>
-        </div>
-        }
+    @if (Model.Movies.Any())
+    {
+        <table class="table table-bordered text-muted">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Showtimes</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movieShowtime in Model.Movies)
+                {
+                    <tr>
+                        <td>
+                            <div class="card" style="width: 15rem;">
+                                <partial name="_MovieCardPartial" model="@movieShowtime.MovieCard" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap">
+                                @foreach (var showtime in movieShowtime.Showtimes)
+                                {
+                                    <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice">
+                                        @showtime.StartTime
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
 
 @section Scripts {
