@@ -1,0 +1,125 @@
+﻿@model TicketSelectionViewModel
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Seat Selection</h3>
+            <div class="seat-layout pt-5">
+                <div class="col-12">
+                    @for (int row = 1; row <= 3; row++)
+                    {
+                        <div class="row">
+                            @for (int seatNumber = 1; seatNumber <= 5; seatNumber++)
+                            {
+                                var seatId = (row - 1) * 5 + seatNumber;
+                                var isReserved = Model.ReservedSeats.Contains(seatId);
+                                var seatClass = isReserved ? "seat reserved" : "seat";
+                                <div class="@seatClass" data-seat-id="@seatId">
+                                    <i class="fas fa-chair"></i>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+           <button id="finishReservation" class="btn btn-primary mt-5">Finish Reservation</button>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .seat-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .seat {
+        width: 6rem;
+        height: 6rem;
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .reserved {
+        background-color: #f00; /* Red color for reserved seats */
+    }
+
+    .selected {
+        background-color: rgba(255, 0, 0, 0.5); /* Dark red with opacity for selected seats */
+    }
+
+    /* Style the seat icon */
+    i.fa-chair {
+        font-size: 24px;
+        color: #000; /* Default color for unselected seats */
+    }
+
+        i.fa-chair.reserved {
+            color: #fff; /* White color for reserved seats */
+        }
+
+        i.fa-chair.selected {
+            color: #fff; /* White color for selected seats */
+        }
+</style>
+
+@section Scripts {
+    <script>
+        // Define a variable to keep track of selected seats
+        var selectedSeats = [];
+
+        // Function to handle seat selection
+        function handleSeatSelection() {
+            // Add or remove the seat ID from the selectedSeats array
+            var seatId = $(this).data('seat-id');
+            if (selectedSeats.includes(seatId)) {
+                selectedSeats = selectedSeats.filter(id => id !== seatId);
+            } else {
+                selectedSeats.push(seatId);
+            }
+
+            // Update the seat colors based on selection
+            updateSeatColors();
+        }
+
+        // Function to update seat colors based on selection
+        function updateSeatColors() {
+            $('.seat').each(function () {
+                var seatId = $(this).data('seat-id');
+                if (selectedSeats.includes(seatId)) {
+                    $(this).removeClass('reserved').addClass('selected');
+                } else if ($(this).hasClass('reserved')) {
+                    $(this).removeClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            });
+        }
+
+        // Function to handle "Finish Reservation" button click
+        function finishReservation() {
+            // Redirect to the confirmation page with selected seat IDs
+            window.location.href = '/Reservation/Confirm?seatIds=' + selectedSeats.join(',');
+        }
+
+        // Attach event handlers
+        $(document).ready(function () {
+            $('.seat').on('click', handleSeatSelection);
+            $('#finishReservation').on('click', finishReservation);
+        });
+    </script>
+}

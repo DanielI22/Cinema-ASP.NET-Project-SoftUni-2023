@@ -46,6 +46,7 @@
             .Where(s => s.MovieId == movieId && s.CinemaId == cinemaId && s.StartTime.Date == date.Date)
             .Select(s => new ShowtimeViewModel
             {
+                Id = s.Id,
                 TicketPrice = s.TicketPrice,
                 StartTime = s.StartTime.ToString("hh:mm tt")
             })

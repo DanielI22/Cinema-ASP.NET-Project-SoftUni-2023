@@ -4,9 +4,11 @@
     using CinemaSystem.Web.ViewModels.Cinema;
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections;
 
+    [Authorize]
     public class ShowtimeController : Controller
     {
         private readonly IShowtimeService showtimeService;
@@ -18,6 +20,7 @@
             this.cinemaService = cinemaService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Select(int cinemaId)
         {
             IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
@@ -32,6 +35,7 @@
             return View(viewModel);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Select(int cinemaId, ShowtimeSelectViewModel viewModel)
         {

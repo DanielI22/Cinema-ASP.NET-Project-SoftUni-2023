@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<MovieCardViewModel>
 
 <div id="movieCarousel" class="carousel slide" data-ride="carousel">
+    @{var itemsPerSlide = MoviesPerSlide;}
+
     <div class="carousel-inner">
         @{
             var movies = Model.ToList();
             var itemCount = movies.Count;
             var currentIndex = 0;
-            var itemsPerSlide = MoviesPerSlide;
             var slideCount = (int)Math.Ceiling((double)itemCount / itemsPerSlide);
 
             for (int i = 0; i < slideCount; i++)
@@ -30,13 +31,14 @@
             }
         }
     </div>
-
+    @if (itemsPerSlide < Model.ToList().Count) {
     <a class="carousel-control-prev" href="#movieCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     </a>
     <a class="carousel-control-next" href="#movieCarousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </a>
+    }
 </div>
 
 <style>
