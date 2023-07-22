@@ -48,7 +48,7 @@
                             <div class="d-flex flex-wrap">
                                 @foreach (var showtime in movieShowtime.Showtimes)
                                 {
-                                     <a class="text-decoration-none" asp-controller="Ticket" asp-action="Reserve" asp-route-id="@showtime.Id">
+                                     <a class="text-decoration-none" asp-controller="Ticket" asp-action="Reserve" asp-route-showtimeId="@showtime.Id">
                                     <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice">
                                         @showtime.StartTime
                                     </div>

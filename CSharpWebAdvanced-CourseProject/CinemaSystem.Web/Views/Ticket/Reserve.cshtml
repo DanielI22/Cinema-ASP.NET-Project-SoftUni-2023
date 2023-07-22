@@ -9,12 +9,12 @@
             <h3>Seat Selection</h3>
             <div class="seat-layout pt-5">
                 <div class="col-12">
-                    @for (int row = 1; row <= 3; row++)
+                    @for (int row = 1; row <= RowsPerShowtime; row++)
                     {
                         <div class="row">
-                            @for (int seatNumber = 1; seatNumber <= 5; seatNumber++)
+                            @for (int seatNumber = 1; seatNumber <= SeatsPerRow; seatNumber++)
                             {
-                                var seatId = (row - 1) * 5 + seatNumber;
+                                var seatId = (row - 1) * SeatsPerRow + seatNumber;
                                 var isReserved = Model.ReservedSeats.Contains(seatId);
                                 var seatClass = isReserved ? "seat reserved" : "seat";
                                 <div class="@seatClass" data-seat-id="@seatId">
@@ -25,7 +25,12 @@
                     }
                 </div>
             </div>
-           <button id="finishReservation" class="btn btn-primary mt-5">Finish Reservation</button>
+            <form id="reservationForm" method="post" asp-action="Reserve">
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="showtimeId" name="showtimeId" value="@Model.ShowtimeId" />
+                <input type="hidden" id="selectedSeats" name="selectedSeats" value="" />
+                <button type="button" id="finishReservation" class="btn btn-primary mt-5" disabled>Finish Reservation</button>
+            </form>
         </div>
     </div>
 </div>
@@ -88,8 +93,17 @@
             var seatId = $(this).data('seat-id');
             if (selectedSeats.includes(seatId)) {
                 selectedSeats = selectedSeats.filter(id => id !== seatId);
-            } else {
+            } else if (selectedSeats.length < 3) {
                 selectedSeats.push(seatId);
+            }
+            else {
+                alert("You cannot reserve more than 3 seats");
+            }
+
+            if (selectedSeats.length > 0) {
+                $('#finishReservation').removeAttr('disabled');
+            } else {
+                $('#finishReservation').attr('disabled', true);
             }
 
             // Update the seat colors based on selection
@@ -112,8 +126,11 @@
 
         // Function to handle "Finish Reservation" button click
         function finishReservation() {
-            // Redirect to the confirmation page with selected seat IDs
-            window.location.href = '/Reservation/Confirm?seatIds=' + selectedSeats.join(',');
+            // Set the values of the hidden input elements
+            $("#selectedSeats").val(selectedSeats.join(','));
+
+            // Submit the form
+            $("#reservationForm").submit();
         }
 
         // Attach event handlers

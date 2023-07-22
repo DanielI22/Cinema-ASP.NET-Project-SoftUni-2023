@@ -5,5 +5,7 @@
         public const int ReleaseYear = 2023;
         public const int ReviewsPerPage = 4;
         public const int MoviesPerSlide = 4;
+        public const int RowsPerShowtime = 3;
+        public const int SeatsPerRow = 5;
     }
 }
