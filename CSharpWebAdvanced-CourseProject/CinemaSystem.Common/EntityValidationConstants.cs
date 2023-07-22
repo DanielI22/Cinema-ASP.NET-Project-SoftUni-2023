@@ -38,5 +38,11 @@
             public const int TextMaxLength = 500;
             public const int TextMinLength = 1;
         }
+
+        public static class User
+        {
+            public const int UsernameMaxLength = 20;
+            public const int UsernameMinLength = 1;
+        }
     }
 }

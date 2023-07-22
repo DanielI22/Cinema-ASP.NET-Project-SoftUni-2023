@@ -39,10 +39,15 @@
 
             if (showtime == null)
             {
-                throw new InvalidOperationException("Showtime not found"); // Showtime not found
+                throw new InvalidOperationException("Showtime not found");
             }
             foreach (var seat in selectedSeats)
             {
+                if (dbContext.Tickets.Any(t => t.ShowtimeId == showtimeId && t.SeatNumber == seat.ToString()))
+                {
+                    throw new InvalidOperationException("Seat already reserved!");
+                }
+
                 Ticket ticket = new Ticket
                 {
                     Showtime = showtime,
@@ -53,7 +58,6 @@
                 dbContext.Tickets.Add(ticket);
             }
 
-            // Save changes to the database
             await dbContext.SaveChangesAsync();
         }
     }

@@ -91,13 +91,17 @@
         function handleSeatSelection() {
             // Add or remove the seat ID from the selectedSeats array
             var seatId = $(this).data('seat-id');
-            if (selectedSeats.includes(seatId)) {
-                selectedSeats = selectedSeats.filter(id => id !== seatId);
-            } else if (selectedSeats.length < 3) {
-                selectedSeats.push(seatId);
-            }
-            else {
-                alert("You cannot reserve more than 3 seats");
+            var reserved = $(this).hasClass('reserved');
+
+            if(!reserved) {
+                if (selectedSeats.includes(seatId)) {
+                    selectedSeats = selectedSeats.filter(id => id !== seatId);
+                } else if (selectedSeats.length < 3) {
+                    selectedSeats.push(seatId);
+                }
+                else {
+                    alert("You cannot reserve more than 3 seats");
+                }
             }
 
             if (selectedSeats.length > 0) {
