@@ -4,12 +4,13 @@ using CinemaSystem.Web.Data;
 using CinemaSystem.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services
-.AddDbContext<CinemaSystemDbContext>(options =>
+
+builder.Services.AddDbContext<CinemaSystemDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
