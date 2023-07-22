@@ -3,6 +3,10 @@
     ViewData["Title"] = "Tickets";
 }
 
+<div id="customAlert" class="alert alert-warning alert-dismissible custom-alert" role="alert" style="display: none;">
+    <strong>Warning!</strong> You cannot book more than 3 seats at a time.
+</div>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-12 text-center">
@@ -100,7 +104,9 @@
                     selectedSeats.push(seatId);
                 }
                 else {
-                    alert("You cannot reserve more than 3 seats");
+                    $('#customAlert').show();
+                    $('#customAlert').focus();
+                    $('#customAlert').delay(3000).fadeOut();
                 }
             }
 

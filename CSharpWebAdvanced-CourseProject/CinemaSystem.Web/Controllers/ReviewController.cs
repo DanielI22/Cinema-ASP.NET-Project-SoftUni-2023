@@ -53,9 +53,13 @@
             try
             {
                 string? userId = User.GetId();
-                if(userId != null && await reviewService.IsReviewCreatorAsync(reviewId, userId))
+                if(userId != null && (await reviewService.IsReviewCreatorAsync(reviewId, userId) || User.IsAdmin()))
                 {
                     await reviewService.DeleteReviewAsync(reviewId);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = "Your Review could not be deleted. Sorry for the inconvenience!";
                 }
             }
             catch (Exception)
