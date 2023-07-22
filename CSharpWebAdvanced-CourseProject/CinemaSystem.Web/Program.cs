@@ -5,6 +5,7 @@ using CinemaSystem.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using static CinemaSystem.Common.GeneralApplicationConstants;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 })
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<CinemaSystemDbContext>();
 
 builder.Services.AddApplicationServices(typeof(ICinemaService));
@@ -53,6 +55,11 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.SeedAdministrator(DevelopmentAdminEmail);
+}
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
