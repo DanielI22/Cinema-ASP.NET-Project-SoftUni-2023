@@ -39,7 +39,7 @@
         {
             try
             {
-                List<int> selectedSeatsNumbers = Utils.ParseCommaSeparatedString(selectedSeats);
+                List<int> selectedSeatsNumbers = ParseCommaSeparatedString(selectedSeats);
                 string? userId = User.GetId();
                 if(userId != null)
                 {
