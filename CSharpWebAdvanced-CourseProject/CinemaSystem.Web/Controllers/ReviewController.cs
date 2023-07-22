@@ -18,14 +18,21 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Guid movieId, string ReviewToAdd)
+        public async Task<IActionResult> Post(string movieId, string ReviewToAdd)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Guid userId = User.GetId();
-                    await reviewService.PostReviewAsync(movieId, userId, ReviewToAdd);
+                    string? userId = User.GetId();
+                    if (userId != null)
+                    {
+                        await reviewService.PostReviewAsync(movieId, userId, ReviewToAdd);
+                    }
+                    else
+                    {
+                        TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
+                    }
                 }
                 catch (Exception)
                 {
@@ -41,12 +48,12 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteMy(Guid reviewId, Guid movieId)
+        public async Task<IActionResult> DeleteMy(string reviewId, string movieId)
         {
             try
             {
-                Guid userId = User.GetId();
-                if(await reviewService.IsReviewCreatorAsync(reviewId, userId))
+                string? userId = User.GetId();
+                if(userId != null && await reviewService.IsReviewCreatorAsync(reviewId, userId))
                 {
                     await reviewService.DeleteReviewAsync(reviewId);
                 }

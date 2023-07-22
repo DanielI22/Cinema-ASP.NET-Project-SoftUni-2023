@@ -24,7 +24,7 @@
 
         public async Task<IActionResult> Reserve(int showtimeId)
         {
-            TicketSelectionViewModel ticketSelectionViewModel = new TicketSelectionViewModel
+            TicketSelectionViewModel ticketSelectionViewModel = new()
             {
                 ShowtimeId = showtimeId
             };
@@ -40,8 +40,16 @@
             try
             {
                 List<int> selectedSeatsNumbers = Utils.ParseCommaSeparatedString(selectedSeats);
-                Guid userId = User.GetId();
-                await ticketService.ReserveTicketsAsync(showtimeId, userId, selectedSeatsNumbers);
+                string? userId = User.GetId();
+                if(userId != null)
+                {
+                    await ticketService.ReserveTicketsAsync(showtimeId, userId, selectedSeatsNumbers);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = "There was an error!";
+                    return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception)
             {
@@ -49,7 +57,7 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData[SuccessMessage] = "You reservation is completed! We are expecting you";
+            TempData[SuccessMessage] = "You reservation is completed. We are expecting you!";
             return RedirectToAction("Index", "Home");
         }
     }

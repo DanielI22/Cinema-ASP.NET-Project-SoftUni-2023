@@ -22,7 +22,7 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(Guid id, int pageNumber = 1, int pageSize = ReviewsPerPage)
+        public async Task<IActionResult> Details(string id, int pageNumber = 1, int pageSize = ReviewsPerPage)
         {
             MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(id, pageNumber, pageSize);
             if (model == null)

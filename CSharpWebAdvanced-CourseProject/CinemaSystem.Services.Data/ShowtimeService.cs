@@ -22,9 +22,9 @@
         }
         public async Task<IEnumerable<MovieShowtimeViewModel>> GetMovieShowtimesForCinemaDateAsync(int cinemaId, DateTime selectedDate)
         {
-            List<Guid> movieIds = await dbContext.Showtimes
+            List<string> movieIds = await dbContext.Showtimes
             .Where(s => s.CinemaId == cinemaId && s.StartTime.Date == selectedDate.Date)
-            .Select(s => s.MovieId)
+            .Select(s => s.MovieId.ToString())
             .Distinct()
             .ToListAsync();
 

@@ -28,10 +28,10 @@ namespace CinemaSystem.Web.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGet()
         {
-            Guid userId = User.GetId();
+            string? userId = User.GetId();
 
             UserTickets = await dbContext.Tickets
-                .Where(t => t.UserId == userId)
+                .Where(t => t.UserId.ToString() == userId)
                 .Include(t => t.Showtime)
                 .ThenInclude(s => s.Movie)
                 .ThenInclude(m => m.MovieGenres)

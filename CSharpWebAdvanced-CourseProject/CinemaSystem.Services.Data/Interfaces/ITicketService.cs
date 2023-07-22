@@ -6,6 +6,6 @@
     public interface ITicketService
     {
         Task<IEnumerable<int>> GetSelectedSeatsAsync(int showtimeId);
-        Task ReserveTicketsAsync(int showtimeId, Guid usedId, List<int> selectedSeats);
+        Task ReserveTicketsAsync(int showtimeId, string usedId, List<int> selectedSeats);
     }
 }

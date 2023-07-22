@@ -18,16 +18,16 @@
             this.dbContext = dbContext;
         }
 
-        public async Task DeleteReviewAsync(Guid reviewId)
+        public async Task DeleteReviewAsync(string reviewId)
         {
             Review review = await GetReviewByIdAsync(reviewId);
             dbContext.Reviews.Remove(review);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Review> GetReviewByIdAsync(Guid reviewId)
+        public async Task<Review> GetReviewByIdAsync(string reviewId)
         {
-            Review? review = await dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId);
+            Review? review = await dbContext.Reviews.FirstOrDefaultAsync(r => r.Id.ToString() == reviewId);
             if(review == null)
             {
                 throw new InvalidOperationException("Review not found");
@@ -35,12 +35,12 @@
             return review;
         }
 
-        public async Task PostReviewAsync(Guid movieId, Guid userId, string reviewText)
+        public async Task PostReviewAsync(string movieId, string userId, string reviewText)
         {
             Review review = new Review
             {
-                MovieId = movieId,
-                UserId = userId,
+                MovieId = Guid.Parse(movieId),
+                UserId = Guid.Parse(userId),
                 ReviewText = reviewText,
                 CreatedOn = DateTime.Now
             };
@@ -49,10 +49,10 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsReviewCreatorAsync(Guid reviewId, Guid userId)
+        public async Task<bool> IsReviewCreatorAsync(string reviewId, string userId)
         {
             Review review = await GetReviewByIdAsync(reviewId);
-            return review.UserId == userId;
+            return review.UserId.ToString() == userId;
         }
 
         public async Task<IEnumerable<ReviewViewModel>> GetReviewsDescendingAsync()
@@ -68,11 +68,11 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ReviewViewModel>> GetMovieReviewsPerPageAsync(Guid movieId, int pageNumber, int pageSize)
+        public async Task<IEnumerable<ReviewViewModel>> GetMovieReviewsPerPageAsync(string movieId, int pageNumber, int pageSize)
         {
             IEnumerable<Review> reviews = await dbContext.Reviews
                 .Include(r => r.User)
-                .Where(r => r.MovieId == movieId)
+                .Where(r => r.MovieId.ToString() == movieId)
                 .OrderByDescending(review => review.CreatedOn)
                 .ToListAsync();
 
@@ -92,9 +92,9 @@
             return paginatedReviewViewModels;
         }
 
-        public async Task<int> GetTotalMovieReviewsCount(Guid movieId)
+        public async Task<int> GetTotalMovieReviewsCount(string movieId)
         {
-            return await dbContext.Reviews.Where(r => r.MovieId.Equals(movieId)).CountAsync();
+            return await dbContext.Reviews.Where(r => r.MovieId.ToString() == movieId).CountAsync();
         }
     }
 }

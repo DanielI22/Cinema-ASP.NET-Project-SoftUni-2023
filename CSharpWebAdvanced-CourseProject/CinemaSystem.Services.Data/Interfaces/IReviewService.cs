@@ -7,11 +7,11 @@
 
     public interface IReviewService
     {
-        Task<Review> GetReviewByIdAsync(Guid reviewId);
-        Task DeleteReviewAsync(Guid reviewId);
-        Task PostReviewAsync(Guid movieId, Guid userId, string reviewText);
-        Task<bool> IsReviewCreatorAsync(Guid reviewId, Guid userId);
-        Task<IEnumerable<ReviewViewModel>> GetMovieReviewsPerPageAsync(Guid movieId, int pageNumber, int pageSize);
-        Task<int> GetTotalMovieReviewsCount(Guid movieId);
+        Task<Review> GetReviewByIdAsync(string reviewId);
+        Task DeleteReviewAsync(string reviewId);
+        Task PostReviewAsync(string movieId, string userId, string reviewText);
+        Task<bool> IsReviewCreatorAsync(string reviewId, string userId);
+        Task<IEnumerable<ReviewViewModel>> GetMovieReviewsPerPageAsync(string movieId, int pageNumber, int pageSize);
+        Task<int> GetTotalMovieReviewsCount(string movieId);
     }
 }

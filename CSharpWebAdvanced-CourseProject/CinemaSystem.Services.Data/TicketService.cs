@@ -31,7 +31,7 @@
             return new List<int>();
         }
 
-        public async Task ReserveTicketsAsync(int showtimeId, Guid usedId, List<int> selectedSeats)
+        public async Task ReserveTicketsAsync(int showtimeId, string usedId, List<int> selectedSeats)
         {
             Showtime? showtime = await dbContext.Showtimes
             .Include(s => s.Tickets)
@@ -52,7 +52,7 @@
                 {
                     Showtime = showtime,
                     Price = showtime.TicketPrice,
-                    UserId = usedId,
+                    UserId = Guid.Parse(usedId),
                     SeatNumber = seat.ToString(),
                 };
                 dbContext.Tickets.Add(ticket);

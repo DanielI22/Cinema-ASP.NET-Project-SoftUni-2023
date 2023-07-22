@@ -40,7 +40,7 @@
                             <li>
                                 <h5>@review.ReviewAuthor</h5>
                                 <p>@review.ReviewText</p>
-                                @if (SignInManager.IsSignedIn(User) && User.GetId() == review.CreatorId)
+                                @if (SignInManager.IsSignedIn(User) && User.GetId() == review.CreatorId.ToString())
                                 {
                                     <form asp-controller="Review" asp-action="DeleteMy" asp-route-reviewId="@review.ReviewId" asp-route-movieId="@Model.Id" method="post" )">
                                         <button type="submit" class="btn btn-danger">Delete</button>

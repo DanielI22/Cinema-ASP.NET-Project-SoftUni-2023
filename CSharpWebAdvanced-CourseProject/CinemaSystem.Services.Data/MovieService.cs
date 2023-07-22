@@ -21,10 +21,10 @@
             this.reviewService = reviewService;
         }
 
-        public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<Guid> movieIds)
+        public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds)
         {
            return await dbContext.Movies
-           .Where(m => movieIds.Contains(m.Id))
+           .Where(m => movieIds.Contains(m.Id.ToString()))
            .Select(m => new MovieCardViewModel
            {
                Id = m.Id,
@@ -78,13 +78,13 @@
                 }).ToListAsync();
         }
 
-        public async Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(Guid movieId, int pageNumber, int pageSize)
+        public async Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(string movieId, int pageNumber, int pageSize)
         {
             var reviews = await reviewService.GetMovieReviewsPerPageAsync(movieId, pageNumber, pageSize);
             var totalReviews = await reviewService.GetTotalMovieReviewsCount(movieId);
 
              MovieDetailsViewModel? movieModel = await dbContext.Movies
-            .Where(m => m.Id == movieId)
+            .Where(m => m.Id.ToString() == movieId)
             .Include(m => m.Reviews)
             .Include(m => m.MovieGenres)
             .ThenInclude(mg => mg.Genre)

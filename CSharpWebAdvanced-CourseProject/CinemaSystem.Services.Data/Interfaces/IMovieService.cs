@@ -4,10 +4,10 @@
 
     public interface IMovieService
     {
-        Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<Guid> movieIds);
+        Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds);
         Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync();
 
-        Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(Guid id, int pageNumber, int pageSize);
+        Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(string id, int pageNumber, int pageSize);
 
         Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId);
     }
