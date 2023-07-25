@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="container">
+    <h1 class="my-4">Admin Dashboard</h1>
+    <h2 class="mb-3">Here you can manage all entities in Cinemania system</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group bg-dark text-muted">
+                <li class="list-group-item">
+                    <h3>Movies</h3>
+                    <p>Manage and view all movies in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Movie" asp-action="Index">View Movies</a>
+                </li>
+                <li class="list-group-item">
+                    <h3>Genres</h3>
+                    <p>Manage and view all movie genres in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Genre" asp-action="Index">View Genres</a>
+                </li>
+                <li class="list-group-item">
+                    <h3>Showtimes</h3>
+                    <p>Manage and view all movie showtimes in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Showtime" asp-action="Index">View Showtimes</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h3>Cinemas</h3>
+                    <p>Manage and view all cinemas in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Cinema" asp-action="Index">View Cinemas</a>
+                </li>
+                <li class="list-group-item">
+                    <h3>Tickets</h3>
+                    <p>Manage and view all tickets in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Ticket" asp-action="Index">View Tickets</a>
+                </li>
+                <li class="list-group-item">
+                    <h3>Users</h3>
+                    <p>Manage and view all users in the system.</p>
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="Index">View Users</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

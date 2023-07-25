@@ -15,19 +15,25 @@
 <body class="text-muted bg-dark">
     <partial name="_NotificationsPartial"/>
     <header class="text-muted">
-        <nav class="navbar navbar-expand-lg navbar-dark px-5">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Cinemania</a>
+        <nav id="navbarNav" class="navbar navbar-expand-lg navbar-dark px-5">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cinemania</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Movie" asp-action="All">Movies</a>
+                        <a class="nav-link" asp-area="" asp-controller="Movie" asp-action="All">Movies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Cinema" asp-action="All">Showtimes</a>
+                        <a class="nav-link" asp-area="" asp-controller="Cinema" asp-action="All">Showtimes</a>
                     </li>
+                    @if(User.IsAdmin())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Dashboard">Admin dashboard</a>
+                        </li>
+                    }
                 </ul>
             </div>
         <partial name="_LoginPartial" />

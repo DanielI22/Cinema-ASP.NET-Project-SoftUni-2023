@@ -1,0 +1,37 @@
+﻿@model List<MovieShowViewModel>
+@{
+    ViewData["Title"] = "Movies";
+}
+<h1>Movies Dashboard</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Add">Add New Movie</a>
+</p>
+
+<table class="table text-muted">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Genres</th>
+            <th>Release Year</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td><img src="@movie.PosterImageUrl"></td>
+                <td>@movie.Title</td>
+                <td>@String.Join(", ", movie.Genres?.Select(g => g.Name)!)</td>
+                <td>@movie.ReleaseYear</td>
+                <td>@movie.Description</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@movie.Id">Edit</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@movie.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

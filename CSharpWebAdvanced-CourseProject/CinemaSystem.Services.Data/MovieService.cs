@@ -1,8 +1,10 @@
 ﻿namespace CinemaSystem.Services.Data
 {
+    using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels;
+    using CinemaSystem.Web.ViewModels.Admin.Movie;
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Review;
     using Microsoft.EntityFrameworkCore;
@@ -112,6 +114,47 @@
             movieModel.PageSize = pageSize;
 
             return movieModel;
+        }
+
+        public async Task<IEnumerable<MovieShowViewModel>> GetAllMoviesAsync()
+        {
+            return await dbContext.Movies
+                 .Include(m => m.MovieGenres)
+                 .ThenInclude(mg => mg.Genre)
+                 .Select(m => new MovieShowViewModel
+                 {
+                     Id = m.Id,
+                     Title = m.Title,
+                     PosterImageUrl = m.PosterImageUrl,
+                     ReleaseYear = m.ReleaseYear,
+                     Description = m.Description,
+                     Genres = m.MovieGenres.Select(mg => new GenreViewModel
+                     {
+                         Id = mg.GenreId,
+                         Name = mg.Genre.Name
+                     })
+                 }).ToListAsync();
+        }
+
+        public async Task AddMovieAsync(AddMovieViewModel model)
+        {
+            Movie movie = new Movie
+            {
+                Title = model.Title,
+                PosterImageUrl = model.PosterImageUrl,
+                Description = model.Description,
+                ReleaseYear = model.ReleaseYear
+            };
+
+            foreach(var genreId in model.GenresId) {
+                MovieGenre mg = new MovieGenre();
+                mg.Movie = movie;
+                mg.GenreId = genreId;
+                await dbContext.MovieGenre.AddAsync(mg);
+            }
+
+            await dbContext.Movies.AddAsync(movie);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

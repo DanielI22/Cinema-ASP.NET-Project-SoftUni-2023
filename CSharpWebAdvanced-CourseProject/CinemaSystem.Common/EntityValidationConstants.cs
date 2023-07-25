@@ -14,10 +14,10 @@
             public const int TitleMinLength = 2;
 
             public const int DescriptionMaxLength = 1000;
-            public const int DescriptionMinLength = 50;
+            public const int DescriptionMinLength = 10;
 
-            public const int ReleaseYearMaxLength = 4;
-            public const int ReleaseYearMinLength = 4;
+            public const int ReleaseYearMin = 1800;
+            public const int ReleaseYearMax = 2300;
 
             public const int PosterImageUrlMaxLength = 2048;
         }

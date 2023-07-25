@@ -1,0 +1,46 @@
+﻿@model AddMovieViewModel
+@{
+    ViewData["Title"] = "Add Movie";
+}
+<h1>Add New Movie</h1>
+
+<div class="container">
+<h2>Add manually</h2>
+<form asp-action="Add">
+    <div class="form-group">
+        <label class="pt-3">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class ="pt-3">Poster</label>
+        <input asp-for="PosterImageUrl" class="form-control" />
+        <span asp-validation-for="PosterImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class ="pt-3">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="pt-3">Genres</label>
+        <select asp-for="@Model.GenresId" class="select form-control" multiple>
+            @foreach (var genre in @Model.Genres)
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+        </select>
+        <span asp-validation-for="GenresId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="pt-3">Release Year</label>
+        <input asp-for="ReleaseYear" class="form-control" />
+        <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" style="width:100%">Add</button>
+</form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
