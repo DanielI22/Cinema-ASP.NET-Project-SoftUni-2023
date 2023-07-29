@@ -2,7 +2,7 @@
 {
     public class TicketSelectionViewModel
     {
-        public int ShowtimeId { get; set; }
+        public string ShowtimeId { get; set; } = null!;
         public IEnumerable<int> ReservedSeats { get; set; } = new List<int>();
     }
 }

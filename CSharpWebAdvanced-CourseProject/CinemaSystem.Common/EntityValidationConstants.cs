@@ -1,5 +1,7 @@
 ﻿namespace CinemaSystem.Common
 {
+    using System.Data;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
     public static class EntityValidationConstants
     {
         public static class Genre 
@@ -39,10 +41,22 @@
             public const int TextMinLength = 1;
         }
 
+        public static class Showtime
+        {
+            public const int TicketPriceMax = 500;
+            public const int TicketPriceMin = 1;
+        }
+
         public static class User
         {
             public const int UsernameMaxLength = 20;
             public const int UsernameMinLength = 1;
+        }
+
+        public static class Ticket
+        {
+            public const int SeatNumberMin = 1;
+            public const int SeatNumberMax = CurrentNumberOfSeats;
         }
     }
 }

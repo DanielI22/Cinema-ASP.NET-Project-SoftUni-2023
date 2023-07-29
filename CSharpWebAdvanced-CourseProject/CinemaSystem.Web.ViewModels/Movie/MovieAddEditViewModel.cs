@@ -1,10 +1,10 @@
-﻿namespace CinemaSystem.Web.ViewModels.Admin.Movie
+﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
-    using CinemaSystem.Web.ViewModels.Movie;
     using System.ComponentModel.DataAnnotations;
+    using CinemaSystem.Web.ViewModels.Genre;
     using static CinemaSystem.Common.EntityValidationConstants.Movie;
 
-    public class AddMovieViewModel
+    public class MovieAddEditViewModel
     {
         [Required]
         [MinLength(TitleMinLength)]
@@ -13,16 +13,18 @@
 
         [MinLength(DescriptionMinLength)]
         [MaxLength(DescriptionMaxLength)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Required]
         [Range(ReleaseYearMin, ReleaseYearMax)]
-        public int ReleaseYear { get; set; }
+        [Display(Name = "Release Year")]
+        public int ReleaseYear { get; set; } = 1900;
 
         [MaxLength(PosterImageUrlMaxLength)]
         public string? PosterImageUrl { get; set; }
 
         [Required]
+        [Display(Name = "Genre")]
         public List<int> GenresId { get; set; } = null!;
 
         [Required]

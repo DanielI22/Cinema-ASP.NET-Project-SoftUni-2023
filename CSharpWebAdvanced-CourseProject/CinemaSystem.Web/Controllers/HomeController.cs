@@ -1,6 +1,7 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
     using CinemaSystem.Services.Data.Interfaces;
+    using CinemaSystem.Web.Infrastructure.Extensions;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;

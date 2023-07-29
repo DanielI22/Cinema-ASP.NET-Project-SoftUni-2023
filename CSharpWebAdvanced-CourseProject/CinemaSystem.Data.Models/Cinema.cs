@@ -21,10 +21,11 @@
         [MaxLength(AddressMaxLength)]
         public string Address { get; set; } = null!;
 
-        [Required]
         [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
         public virtual ICollection<Showtime> Showtimes { get; set; }
+
+        public bool isActive { get; set; } = true;
     }
 }

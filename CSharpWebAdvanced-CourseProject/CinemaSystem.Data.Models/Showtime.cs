@@ -34,5 +34,8 @@
         public virtual Cinema Cinema { get; set; } = null!;
 
         public virtual ICollection<Ticket> Tickets { get; set; }
+
+        public bool isActive { get; set; } = true;
+
     }
 }

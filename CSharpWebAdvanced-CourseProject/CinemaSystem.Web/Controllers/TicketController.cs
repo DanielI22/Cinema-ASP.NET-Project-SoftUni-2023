@@ -22,7 +22,7 @@
             this.ticketService = ticketService;
         }
 
-        public async Task<IActionResult> Reserve(int showtimeId)
+        public async Task<IActionResult> Reserve(string showtimeId)
         {
             TicketSelectionViewModel ticketSelectionViewModel = new()
             {
@@ -35,7 +35,7 @@
 
 
         [HttpPost]
-        public async Task<IActionResult> Reserve(int showtimeId, string selectedSeats)
+        public async Task<IActionResult> Reserve(string showtimeId, string selectedSeats)
         {
             try
             {

@@ -6,20 +6,27 @@
 <div class="container">
     <div class="row mt-4 justify-content-center">
         <div class="col-6">
-            <form method="post" asp-route-cinemaId="@Model.CinemaId" asp-action="Select">
-                <div class="form-group">
-                    <label for="selectedDate">Select Date:</label>
-                    <select id="selectedDate" name="selectedDate" class="form-control" asp-for="@Model.SelectedDate">
-                        @foreach (var date in Model.Dates)
-                        {
-                            <option value="@date">@date.ToShortDateString()</option>
-                        }
-                    </select>
-                </div>
-                <div class="text-end">
-                <button type="submit" class="btn btn-primary px-5 mt-2">Submit</button>
-                </div>
-            </form>
+            @if(!Model.Dates.Any())
+            {
+                <h2>No upcoming showtimes</h2>
+            }
+            else
+            {
+                <form method="post" asp-route-cinemaId="@Model.CinemaId" asp-action="Select">
+                    <div class="form-group">
+                        <label for="selectedDate">Select Date:</label>
+                        <select id="selectedDate" name="selectedDate" class="form-control" asp-for="@Model.SelectedDate">
+                            @foreach (var date in Model.Dates)
+                            {
+                                <option value="@date">@date.ToShortDateString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary px-5 mt-2">Submit</button>
+                    </div>
+                </form>
+            }
         </div>
     </div>
 </div>
@@ -51,7 +58,7 @@
                                 @foreach (var showtime in movieShowtime.Showtimes)
                                 {
                                      <a class="text-decoration-none" asp-controller="Ticket" asp-action="Reserve" asp-route-showtimeId="@showtime.Id">
-                                    <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice">
+                                    <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice BGN">
                                         @showtime.StartTime
                                     </div>
                                     </a>

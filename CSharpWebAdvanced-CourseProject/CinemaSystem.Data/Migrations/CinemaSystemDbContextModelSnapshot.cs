@@ -17,7 +17,7 @@ namespace CinemaSystem.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -102,7 +102,6 @@ namespace CinemaSystem.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
 
@@ -110,6 +109,9 @@ namespace CinemaSystem.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -121,21 +123,24 @@ namespace CinemaSystem.Data.Migrations
                             Id = 1,
                             Address = "Varna Dubrovnik 8",
                             ImageUrl = "/cinemaImages/cinemaniaVarna.jpg",
-                            Name = "Cinemania Varna"
+                            Name = "Cinemania Varna",
+                            isActive = true
                         },
                         new
                         {
                             Id = 2,
                             Address = "Sofia 33",
                             ImageUrl = "/cinemaImages/cinemaniaSofia.jpg",
-                            Name = "Cinemania Sofia"
+                            Name = "Cinemania Sofia",
+                            isActive = true
                         },
                         new
                         {
                             Id = 3,
                             Address = "Plovdiv 15",
                             ImageUrl = "/cinemaImages/cinemaniaPlovdiv.jpg",
-                            Name = "Cinemania Plovid"
+                            Name = "Cinemania Plovid",
+                            isActive = true
                         });
                 });
 
@@ -152,6 +157,9 @@ namespace CinemaSystem.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Genres", (string)null);
@@ -160,22 +168,26 @@ namespace CinemaSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Biography"
+                            Name = "Biography",
+                            isActive = true
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Drama"
+                            Name = "Drama",
+                            isActive = true
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Action"
+                            Name = "Action",
+                            isActive = true
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Adventure"
+                            Name = "Adventure",
+                            isActive = true
                         });
                 });
 
@@ -202,6 +214,9 @@ namespace CinemaSystem.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Movies", (string)null);
@@ -213,7 +228,8 @@ namespace CinemaSystem.Data.Migrations
                             Description = "As Harvard student Mark Zuckerberg creates the social networking site that would become known as Facebook, he is sued by the twins who claimed he stole their idea and by the co-founder who was later squeezed out of the business.",
                             PosterImageUrl = "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
                             ReleaseYear = 2010,
-                            Title = "The Social Network"
+                            Title = "The Social Network",
+                            isActive = true
                         },
                         new
                         {
@@ -221,7 +237,8 @@ namespace CinemaSystem.Data.Migrations
                             Description = "Archaeologist Indiana Jones races against time to retrieve a legendary artifact that can change the course of history.",
                             PosterImageUrl = "https://m.media-amazon.com/images/M/MV5BNDJhODYxYzItOGIwZC00ZTBiLTlmN2MtMjM2MzQyZDVkMGM4XkEyXkFqcGdeQXVyMTUzMDA3Mjc2._V1_SX300.jpg",
                             ReleaseYear = 2023,
-                            Title = "Indiana Jones and the Dial of Destiny"
+                            Title = "Indiana Jones and the Dial of Destiny",
+                            isActive = true
                         });
                 });
 
@@ -312,6 +329,9 @@ namespace CinemaSystem.Data.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CinemaId");
@@ -327,7 +347,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -335,7 +356,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -343,7 +365,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -351,7 +374,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -359,7 +383,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -367,7 +392,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -375,7 +401,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -383,7 +410,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -391,7 +419,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -399,7 +428,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -407,7 +437,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -415,7 +446,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -423,7 +455,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -431,7 +464,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -439,7 +473,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -447,7 +482,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 1,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -455,7 +491,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -463,7 +500,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -471,7 +509,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -479,7 +518,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 2,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -487,7 +527,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -495,7 +536,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15m
+                            TicketPrice = 15m,
+                            isActive = true
                         },
                         new
                         {
@@ -503,7 +545,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         },
                         new
                         {
@@ -511,7 +554,8 @@ namespace CinemaSystem.Data.Migrations
                             CinemaId = 3,
                             MovieId = new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"),
                             StartTime = new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12m
+                            TicketPrice = 12m,
+                            isActive = true
                         });
                 });
 
@@ -534,6 +578,9 @@ namespace CinemaSystem.Data.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

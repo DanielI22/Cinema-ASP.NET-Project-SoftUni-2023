@@ -26,8 +26,7 @@ namespace CinemaSystem.Data.Migrations
                 {
                     { 1, "Biography" },
                     { 2, "Drama" },
-                    { 3, "Action" },
-                    { 4, "Adventure" }
+                    { 3, "Action" }
                 });
 
             migrationBuilder.InsertData(

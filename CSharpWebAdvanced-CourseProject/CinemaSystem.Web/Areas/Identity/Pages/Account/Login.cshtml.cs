@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using CinemaSystem.Data.Models;
 using static CinemaSystem.Common.EntityValidationConstants.User;
-
+using CinemaSystem.Web.Infrastructure.Extensions;
 
 namespace CinemaSystem.Web.Areas.Identity.Pages.Account
 {
@@ -119,6 +119,10 @@ namespace CinemaSystem.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    if (User.IsAdmin())
+                    {
+                        return RedirectToAction("Dashboard", "Admin", new { area = "Admin" });
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

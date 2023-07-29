@@ -35,5 +35,8 @@
         public virtual ICollection<Review> Reviews { get; set; }
 
         public virtual ICollection<Showtime> Showtimes { get; set; }
+
+        public bool isActive { get; set; } = true;
+
     }
 }

@@ -1,0 +1,35 @@
+﻿@model List<CinemaViewModel>
+@{
+    ViewData["Title"] = "Cinemas";
+}
+<h1>Cinemas Dashboard</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Add">Add New Cinema</a>
+</p>
+
+<table class="table-responsive text-muted">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cinema in Model)
+        {
+            <tr>
+                <td><img src="@cinema.ImageUrl" height="200" style="width:20rem"></td>
+                <td>@cinema.Name</td>
+                <td>@cinema.Address</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@cinema.Id">Edit</a>
+                    <form id="deleteForm" method="post" asp-action="Delete" asp-route-id="@cinema.Id" onclick="return confirm('Are you sure you want to delete this cinema?')">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

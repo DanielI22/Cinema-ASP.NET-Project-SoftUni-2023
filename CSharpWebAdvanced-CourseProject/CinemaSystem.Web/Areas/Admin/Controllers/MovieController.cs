@@ -2,7 +2,7 @@
 {
     using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Admin.Movie;
+    using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
@@ -20,7 +20,7 @@
             this.movieService = movieService;
             this.genreService = genreService;
         }
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             IEnumerable<MovieShowViewModel> movies = await movieService.GetAllMoviesAsync();
             return View(movies);
@@ -28,13 +28,13 @@
 
         public async Task<IActionResult> Add()
         {
-            var model = new AddMovieViewModel();
+            var model = new MovieAddEditViewModel();
             model.Genres = await genreService.GetGenresAsync();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddMovieViewModel movie)
+        public async Task<IActionResult> Add(MovieAddEditViewModel movie)
         {
             if (!ModelState.IsValid)
             {
@@ -45,46 +45,30 @@
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> Edit(Guid id)
-        //{
-        //    Movie movie = await movieService.GetMovieByIdAsync(id);
-        //    if (movie == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Edit(string id)
+        {
+            MovieAddEditViewModel? model = await movieService.GetEditMovieModelAsync(id);
 
-        //    return View(movie);
-        //}
+            return View(model);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(Movie movie)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(movie);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, MovieAddEditViewModel movie)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(movie);
+            }
 
-        //    await movieService.UpdateMovieAsync(movie);
-        //    return RedirectToAction(nameof(Index));
-        //}
+            await movieService.EditMovieAsync(id, movie);
+            return RedirectToAction(nameof(Index));
+        }
 
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    Movie movie = await movieService.GetMovieByIdAsync(id);
-        //    if (movie == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(movie);
-        //}
-
-        //[HttpPost]
-        //[ActionName("Delete")]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    await movieService.DeleteMovieAsync(id);
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await movieService.DeleteMovieAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

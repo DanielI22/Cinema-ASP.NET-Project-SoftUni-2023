@@ -4,12 +4,13 @@
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels;
-    using CinemaSystem.Web.ViewModels.Admin.Movie;
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Review;
+    using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Threading.Tasks;
 
     public class MovieService : IMovieService
@@ -65,6 +66,7 @@
         public async Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync()
         {
             return await dbContext.Movies
+                .Where(m => m.isActive)    
                 .Include(m => m.MovieGenres)
                 .ThenInclude(mg => mg.Genre)
                 .Select(m => new MovieCardViewModel
@@ -109,16 +111,13 @@
             }
 
             movieModel.Reviews = reviews;
-            movieModel.TotalReviews = totalReviews;
-            movieModel.CurrentPage = pageNumber;
-            movieModel.PageSize = pageSize;
 
             return movieModel;
         }
 
         public async Task<IEnumerable<MovieShowViewModel>> GetAllMoviesAsync()
         {
-            return await dbContext.Movies
+            return await dbContext.Movies.Where(m => m.isActive)
                  .Include(m => m.MovieGenres)
                  .ThenInclude(mg => mg.Genre)
                  .Select(m => new MovieShowViewModel
@@ -136,7 +135,7 @@
                  }).ToListAsync();
         }
 
-        public async Task AddMovieAsync(AddMovieViewModel model)
+        public async Task AddMovieAsync(MovieAddEditViewModel model)
         {
             Movie movie = new Movie
             {
@@ -155,6 +154,88 @@
 
             await dbContext.Movies.AddAsync(movie);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<MovieAddEditViewModel?> GetEditMovieModelAsync(string id)
+        {
+            var genres = await dbContext.Genres
+               .Where(g => g.isActive)
+               .Select(c => new GenreViewModel
+               {
+                   Id = c.Id,
+                   Name = c.Name
+               }).ToListAsync();
+
+            return await dbContext.Movies
+                .Where(m => m.Id.ToString() == id)
+                .Select(m => new MovieAddEditViewModel
+                {
+                    Title = m.Title,
+                    PosterImageUrl = m.PosterImageUrl,
+                    Description = m.Description!,
+                    ReleaseYear = m.ReleaseYear,
+                    GenresId = m.MovieGenres.Select(mg => mg.GenreId).ToList(),
+                    Genres = genres
+                }).FirstOrDefaultAsync();
+        }
+
+        public async Task EditMovieAsync(string id, MovieAddEditViewModel model)
+        {
+            var movie = await dbContext.Movies
+                .Where(m => m.isActive)
+                .Include(m => m.MovieGenres)
+                .ThenInclude(mg => mg.Genre)
+                .FirstOrDefaultAsync(m => m.Id.ToString() == id);
+
+            if (movie != null)
+            {
+                movie.Title = model.Title;
+                movie.Description = model.Description;
+                movie.ReleaseYear = model.ReleaseYear;
+                movie.PosterImageUrl = model.PosterImageUrl;
+
+                List<MovieGenre> movieOldGenres = await  dbContext.MovieGenre
+                    .Where(mg => mg.MovieId == movie.Id)
+                    .ToListAsync();
+                dbContext.MovieGenre.RemoveRange(movieOldGenres);
+
+                foreach (var genreId in model.GenresId)
+                {
+                    MovieGenre mg = new MovieGenre();
+                    mg.Movie = movie;
+                    mg.GenreId = genreId;
+                    await dbContext.MovieGenre.AddAsync(mg);
+                }
+
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteMovieAsync(string id)
+        {
+            var movie = await dbContext.Movies
+             .Where(m => m.isActive)
+             .Include(m => m.MovieGenres)
+             .ThenInclude(mg => mg.Genre)
+             .FirstOrDefaultAsync(m => m.Id.ToString() == id);
+
+            if(movie != null)
+            {
+                movie.isActive = false;
+            }
+            await dbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<IEnumerable<ShowtimeMovieViewModel>> GetAllShowtimeMoviesAsync()
+        {
+           return await dbContext.Movies
+            .Where(m => m.isActive)
+            .Select(m => new ShowtimeMovieViewModel()
+            {
+                Id = m.Id,
+                Title = m.Title
+            }).ToListAsync();
         }
     }
 }

@@ -32,5 +32,8 @@
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
+
+        public bool isActive { get; set; } = true;
+
     }
 }

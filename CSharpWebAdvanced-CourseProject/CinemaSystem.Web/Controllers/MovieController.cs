@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.NotificationMessagesConstants;
     using static CinemaSystem.Common.GeneralApplicationConstants;
-
+    using CinemaSystem.Web.ViewModels.Genre;
 
     [Authorize]
     public class MovieController : Controller
@@ -39,7 +39,6 @@
         {
             IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(moviesViewModel.SearchName, moviesViewModel.SelectedGenreId);
             IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
-
             var viewModel = new MoviesViewModel
             {
                 Movies = movies,

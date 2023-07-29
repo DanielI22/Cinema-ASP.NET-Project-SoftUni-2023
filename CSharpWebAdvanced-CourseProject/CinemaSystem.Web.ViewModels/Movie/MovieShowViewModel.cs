@@ -1,6 +1,5 @@
-﻿namespace CinemaSystem.Web.ViewModels.Admin.Movie
+﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
-    using CinemaSystem.Web.ViewModels.Movie;
     using System.ComponentModel.DataAnnotations;
 
     public class MovieShowViewModel

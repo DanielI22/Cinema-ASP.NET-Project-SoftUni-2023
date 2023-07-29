@@ -7,6 +7,7 @@
         public const int MoviesPerSlide = 4;
         public const int RowsPerShowtime = 3;
         public const int SeatsPerRow = 5;
+        public const int CurrentNumberOfSeats = 15;
         public const string AdminRoleName = "Administrator";
         public const string DevelopmentAdminEmail = "admin@admin";
     }

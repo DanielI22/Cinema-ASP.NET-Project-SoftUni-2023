@@ -30,7 +30,7 @@ builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
 {
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-}); ;
+});
 
 WebApplication app = builder.Build();
 

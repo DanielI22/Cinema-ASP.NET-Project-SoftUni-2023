@@ -1,0 +1,53 @@
+﻿@model ShowtimeAddEditViewModel
+@{
+    ViewData["Title"] = "Add Showtime";
+}
+<h1>Add New Showtime</h1>
+
+<div class="container">
+<form asp-action="Add">
+        <div class="form-group">
+            <label class="pt-3">Cinema</label>
+            <select asp-for="@Model.CinemaId" class="select form-control">
+                @foreach (var cinema in @Model.Cinemas)
+                {
+                    <option value="@cinema.Id">@cinema.Name</option>
+                }
+            </select>
+            <span asp-validation-for="CinemaId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="pt-3">Movie</label>
+            <select asp-for="@Model.MovieId" class="select form-control">
+                @foreach (var movie in @Model.Movies)
+                {
+                    <option value="@movie.Id">@movie.Title</option>
+                }
+            </select>
+            <span asp-validation-for="MovieId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.StartTime" class="form-label-add-edit">Start time</label>
+            <input asp-for="@Model.StartTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" />
+            <span asp-validation-for="@Model.StartTime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="pt-3">Ticket Price: <output id="value"></output> BGN</label>
+            <input id="ticketInput" asp-for="@Model.TicketPrice" class="form-range" type="range" min="1" max="200" step="1" />
+            <span asp-validation-for="@Model.TicketPrice" class="text-danger"></span>
+        </div>
+    <button type="submit" class="btn btn-primary mt-3" style="width:100%">Add</button>
+</form>
+</div>
+
+@section Scripts {
+    <script>
+        const value = document.querySelector("#value");
+        const input = document.querySelector("#ticketInput");
+        value.textContent = input.value;
+        input.addEventListener("input", (event) => {
+            value.textContent = event.target.value;
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -4,7 +4,7 @@
 
     public class ShowtimeViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = null!;
         public string StartTime { get; set; } = null!;
         public decimal TicketPrice { get; set; }
     }

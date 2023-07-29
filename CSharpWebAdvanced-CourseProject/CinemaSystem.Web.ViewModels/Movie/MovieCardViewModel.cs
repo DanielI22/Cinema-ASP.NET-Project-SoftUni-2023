@@ -1,4 +1,6 @@
-﻿namespace CinemaSystem.Web.ViewModels.Movie
+﻿using CinemaSystem.Web.ViewModels.Genre;
+
+namespace CinemaSystem.Web.ViewModels.Movie
 {
     public class MovieCardViewModel
     {

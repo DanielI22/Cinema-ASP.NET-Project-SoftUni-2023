@@ -1,0 +1,53 @@
+﻿@model TicketAddEditViewModel
+@{
+    ViewData["Title"] = "Add Ticket";
+}
+<h1>Add New Ticket</h1>
+
+<div class="container">
+<form asp-action="Add">
+        <div class="form-group">
+            <label class="pt-3">Showtime</label>
+            <select asp-for="@Model.ShowtimeId" class="select form-control">
+                @foreach (var showtime in @Model.Showtimes)
+                {
+                    <option value="@showtime.Key">@showtime.Value</option>
+                }
+            </select>
+            <span asp-validation-for="ShowtimeId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="pt-3">User</label>
+            <select asp-for="@Model.UserId" class="select form-control">
+                @foreach (var user in @Model.Users)
+                {
+                    <option value="@user.Key">@user.Value</option>
+                }
+            </select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.SeatNumber" class="form-label-add-edit">Seat Number</label>
+            <input asp-for="@Model.SeatNumber" class="form-control"/>
+            <span asp-validation-for="@Model.SeatNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="pt-3">Ticket Price: <output id="value"></output> BGN</label>
+            <input id="ticketInput" asp-for="@Model.TicketPrice" class="form-range" type="range" min="1" max="200" step="1" />
+            <span asp-validation-for="@Model.TicketPrice" class="text-danger"></span>
+        </div>
+    <button type="submit" class="btn btn-primary mt-3" style="width:100%">Add</button>
+</form>
+</div>
+
+@section Scripts {
+    <script>
+        const value = document.querySelector("#value");
+        const input = document.querySelector("#ticketInput");
+        value.textContent = input.value;
+        input.addEventListener("input", (event) => {
+            value.textContent = event.target.value;
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

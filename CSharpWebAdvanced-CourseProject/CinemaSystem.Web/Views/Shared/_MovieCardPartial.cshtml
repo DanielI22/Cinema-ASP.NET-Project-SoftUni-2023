@@ -3,7 +3,7 @@
 
     <a class="text-decoration-none text-muted" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
     <div class="card bg-dark">
-        <img src="@Model.PosterUrl" class="card-img" alt="@Model.Title">
+        <img src="@Model.PosterUrl" class="card-img" alt="@Model.Title" style="height: 25rem">
         <div class="card-body">
             <h5 class="card-title text-center">@Model.Title</h5>
             <p class="card-genre mb-0 small">@string.Join(", ", Model.Genres.Select(g => g.Name))</p>

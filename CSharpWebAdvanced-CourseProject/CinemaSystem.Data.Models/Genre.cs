@@ -18,5 +18,8 @@
         public string Name { get; set; } = null!;
 
         public virtual ICollection<MovieGenre> MovieGenres { get; set; }
+
+        public bool isActive { get; set; } = true;
+
     }
 }
