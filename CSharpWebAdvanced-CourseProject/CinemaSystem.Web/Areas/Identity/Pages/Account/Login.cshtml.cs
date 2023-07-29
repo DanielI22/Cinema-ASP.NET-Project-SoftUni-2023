@@ -2,21 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using CinemaSystem.Data.Models;
+using CinemaSystem.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using CinemaSystem.Data.Models;
+using System.ComponentModel.DataAnnotations;
 using static CinemaSystem.Common.EntityValidationConstants.User;
-using CinemaSystem.Web.Infrastructure.Extensions;
 
 namespace CinemaSystem.Web.Areas.Identity.Pages.Account
 {

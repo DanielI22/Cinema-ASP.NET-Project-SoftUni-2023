@@ -1,7 +1,7 @@
 ﻿namespace CinemaSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using static CinemaSystem.Common.EntityValidationConstants.Review;
 
     public class Review

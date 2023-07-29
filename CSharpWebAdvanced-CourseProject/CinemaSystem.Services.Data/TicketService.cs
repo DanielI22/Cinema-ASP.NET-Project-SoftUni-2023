@@ -3,8 +3,6 @@
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
-    using CinemaSystem.Web.ViewModels.Cinema;
-    using CinemaSystem.Web.ViewModels.Showtime;
     using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;

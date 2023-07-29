@@ -1,11 +1,8 @@
 ﻿namespace CinemaSystem.Web.ViewModels.Ticket
 {
-    using CinemaSystem.Web.ViewModels.Cinema;
-    using CinemaSystem.Web.ViewModels.Showtime;
     using System.ComponentModel.DataAnnotations;
     using static CinemaSystem.Common.EntityValidationConstants.Showtime;
     using static CinemaSystem.Common.EntityValidationConstants.Ticket;
-    using System.Xml.Linq;
 
     public class TicketAddEditViewModel
     {

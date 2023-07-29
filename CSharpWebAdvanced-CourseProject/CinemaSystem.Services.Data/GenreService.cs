@@ -3,7 +3,6 @@
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
-    using CinemaSystem.Web.ViewModels.Cinema;
     using CinemaSystem.Web.ViewModels.Genre;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.EntityFrameworkCore;

@@ -2,7 +2,6 @@
 {
     using CinemaSystem.Data.Models;
     using CinemaSystem.Web.ViewModels.Review;
-    using System;
     using System.Threading.Tasks;
 
     public interface IReviewService

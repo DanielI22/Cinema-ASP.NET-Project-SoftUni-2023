@@ -1,8 +1,8 @@
 ﻿namespace CinemaSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel.DataAnnotations;
     using Microsoft.EntityFrameworkCore;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Showtime
     {
@@ -18,7 +18,7 @@
         public DateTime StartTime { get; set; }
 
         [Required]
-        [Precision(5,2)]
+        [Precision(5, 2)]
         public decimal TicketPrice { get; set; }
 
         [Required]

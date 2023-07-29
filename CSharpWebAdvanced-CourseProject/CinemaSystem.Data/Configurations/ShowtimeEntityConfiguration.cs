@@ -1,8 +1,8 @@
 ﻿namespace CinemaSystem.Data.Configurations
 {
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Microsoft.EntityFrameworkCore;
     using CinemaSystem.Data.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     public class ShowtimeEntityConfiguration : IEntityTypeConfiguration<Showtime>
     {

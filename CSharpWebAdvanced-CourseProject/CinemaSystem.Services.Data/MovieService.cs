@@ -3,14 +3,11 @@
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
-    using CinemaSystem.Web.ViewModels;
     using CinemaSystem.Web.ViewModels.Movie;
-    using CinemaSystem.Web.ViewModels.Review;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
-    using System.Net;
     using System.Threading.Tasks;
 
     public class MovieService : IMovieService
@@ -26,20 +23,20 @@
 
         public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds)
         {
-           return await dbContext.Movies
-           .Where(m => movieIds.Contains(m.Id.ToString()))
-           .Select(m => new MovieCardViewModel
-           {
-               Id = m.Id,
-               Title = m.Title,
-               PosterUrl = m.PosterImageUrl,
-               Genres = m.MovieGenres.Select(mg => new GenreViewModel
-               {
-                   Id = mg.GenreId,
-                   Name = mg.Genre.Name
-               })
-           })
-           .ToListAsync();
+            return await dbContext.Movies
+            .Where(m => movieIds.Contains(m.Id.ToString()))
+            .Select(m => new MovieCardViewModel
+            {
+                Id = m.Id,
+                Title = m.Title,
+                PosterUrl = m.PosterImageUrl,
+                Genres = m.MovieGenres.Select(mg => new GenreViewModel
+                {
+                    Id = mg.GenreId,
+                    Name = mg.Genre.Name
+                })
+            })
+            .ToListAsync();
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> FilterMoviesAsync(string? searchName, int selectedGenreId)
@@ -66,7 +63,7 @@
         public async Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync()
         {
             return await dbContext.Movies
-                .Where(m => m.isActive)    
+                .Where(m => m.isActive)
                 .Include(m => m.MovieGenres)
                 .ThenInclude(mg => mg.Genre)
                 .Select(m => new MovieCardViewModel
@@ -87,25 +84,25 @@
             var reviews = await reviewService.GetMovieReviewsPerPageAsync(movieId, pageNumber, pageSize);
             var totalReviews = await reviewService.GetTotalMovieReviewsCount(movieId);
 
-             MovieDetailsViewModel? movieModel = await dbContext.Movies
-            .Where(m => m.Id.ToString() == movieId)
-            .Include(m => m.Reviews)
-            .Include(m => m.MovieGenres)
-            .ThenInclude(mg => mg.Genre)
-            .Select(m => new MovieDetailsViewModel
-            {
-                Id = m.Id,
-                Title = m.Title,
-                Description = m.Description,
-                ReleaseYear = m.ReleaseYear,
-                Genres = m.MovieGenres.Select(mg => mg.Genre.Name),
-                PosterUrl = m.PosterImageUrl,
-                TotalReviews = totalReviews,
-                CurrentPage = pageNumber,
-                PageSize = pageSize
-            }).FirstOrDefaultAsync();
+            MovieDetailsViewModel? movieModel = await dbContext.Movies
+           .Where(m => m.Id.ToString() == movieId)
+           .Include(m => m.Reviews)
+           .Include(m => m.MovieGenres)
+           .ThenInclude(mg => mg.Genre)
+           .Select(m => new MovieDetailsViewModel
+           {
+               Id = m.Id,
+               Title = m.Title,
+               Description = m.Description,
+               ReleaseYear = m.ReleaseYear,
+               Genres = m.MovieGenres.Select(mg => mg.Genre.Name),
+               PosterUrl = m.PosterImageUrl,
+               TotalReviews = totalReviews,
+               CurrentPage = pageNumber,
+               PageSize = pageSize
+           }).FirstOrDefaultAsync();
 
-            if(movieModel == null)
+            if (movieModel == null)
             {
                 throw new InvalidOperationException("Error loading movie!");
             }
@@ -145,7 +142,8 @@
                 ReleaseYear = model.ReleaseYear
             };
 
-            foreach(var genreId in model.GenresId) {
+            foreach (var genreId in model.GenresId)
+            {
                 MovieGenre mg = new MovieGenre();
                 mg.Movie = movie;
                 mg.GenreId = genreId;
@@ -194,7 +192,7 @@
                 movie.ReleaseYear = model.ReleaseYear;
                 movie.PosterImageUrl = model.PosterImageUrl;
 
-                List<MovieGenre> movieOldGenres = await  dbContext.MovieGenre
+                List<MovieGenre> movieOldGenres = await dbContext.MovieGenre
                     .Where(mg => mg.MovieId == movie.Id)
                     .ToListAsync();
                 dbContext.MovieGenre.RemoveRange(movieOldGenres);
@@ -219,7 +217,7 @@
              .ThenInclude(mg => mg.Genre)
              .FirstOrDefaultAsync(m => m.Id.ToString() == id);
 
-            if(movie != null)
+            if (movie != null)
             {
                 movie.isActive = false;
             }
@@ -229,13 +227,13 @@
 
         public async Task<IEnumerable<ShowtimeMovieViewModel>> GetAllShowtimeMoviesAsync()
         {
-           return await dbContext.Movies
-            .Where(m => m.isActive)
-            .Select(m => new ShowtimeMovieViewModel()
-            {
-                Id = m.Id,
-                Title = m.Title
-            }).ToListAsync();
+            return await dbContext.Movies
+             .Where(m => m.isActive)
+             .Select(m => new ShowtimeMovieViewModel()
+             {
+                 Id = m.Id,
+                 Title = m.Title
+             }).ToListAsync();
         }
     }
 }

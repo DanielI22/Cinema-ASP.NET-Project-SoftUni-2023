@@ -1,8 +1,6 @@
 ﻿namespace CinemaSystem.Data.Models
 {
     using Microsoft.AspNetCore.Identity;
-    using System.ComponentModel.DataAnnotations;
-    using static CinemaSystem.Common.EntityValidationConstants.User;
 
 
     public class ApplicationUser : IdentityUser<Guid>

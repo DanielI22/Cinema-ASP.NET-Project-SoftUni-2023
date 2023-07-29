@@ -1,12 +1,10 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Cinema;
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections;
 
     [Authorize]
     public class ShowtimeController : Controller

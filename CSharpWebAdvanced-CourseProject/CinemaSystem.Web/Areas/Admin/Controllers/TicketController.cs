@@ -1,18 +1,12 @@
 ﻿namespace CinemaSystem.Web.Areas.Admin.Controllers
 {
     using CinemaSystem.Data.Models;
-    using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Genre;
-    using CinemaSystem.Web.ViewModels.Movie;
-    using CinemaSystem.Web.ViewModels.Showtime;
     using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Data;
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
 

@@ -1,6 +1,5 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
-    using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Authorization;
@@ -53,7 +52,7 @@
             try
             {
                 string? userId = User.GetId();
-                if(userId != null && (await reviewService.IsReviewCreatorAsync(reviewId, userId) || User.IsAdmin()))
+                if (userId != null && (await reviewService.IsReviewCreatorAsync(reviewId, userId) || User.IsAdmin()))
                 {
                     await reviewService.DeleteReviewAsync(reviewId);
                 }

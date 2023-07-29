@@ -13,7 +13,7 @@
                 {
                     result.Add(intValue);
                 }
-               else
+                else
                 {
                     throw new InvalidDataException("invalid data input");
                 }

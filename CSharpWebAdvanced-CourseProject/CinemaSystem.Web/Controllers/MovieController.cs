@@ -1,13 +1,11 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
-    using CinemaSystem.Services.Data;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using static CinemaSystem.Common.NotificationMessagesConstants;
     using static CinemaSystem.Common.GeneralApplicationConstants;
-    using CinemaSystem.Web.ViewModels.Genre;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
     [Authorize]
     public class MovieController : Controller

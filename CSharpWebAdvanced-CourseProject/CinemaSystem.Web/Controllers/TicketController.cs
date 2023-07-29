@@ -1,9 +1,7 @@
 ﻿namespace CinemaSystem.Web.Controllers
 {
-    using CinemaSystem.Common;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Infrastructure.Extensions;
-    using CinemaSystem.Web.ViewModels.Showtime;
     using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -41,7 +39,7 @@
             {
                 List<int> selectedSeatsNumbers = ParseCommaSeparatedString(selectedSeats);
                 string? userId = User.GetId();
-                if(userId != null)
+                if (userId != null)
                 {
                     await ticketService.ReserveTicketsAsync(showtimeId, userId, selectedSeatsNumbers);
                 }

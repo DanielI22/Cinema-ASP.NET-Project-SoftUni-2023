@@ -1,8 +1,7 @@
 ﻿namespace CinemaSystem.Web.Areas.Admin.Controllers
 {
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.ViewModels.Genre;
-    using CinemaSystem.Web.ViewModels.Movie;
+    using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
@@ -10,18 +9,19 @@
 
     [Area("Admin")]
     [Authorize(Roles = AdminRoleName)]
-    public class GenreController : Controller
+    public class UserController : Controller
     {
-        private readonly IGenreService genreService;
+        private readonly IUserService userService;
 
-        public GenreController(IGenreService genreService)
+
+        public UserController(IUserService userService)
         {
-            this.genreService = genreService;
+            this.userService = userService;
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
-            return View(genres);
+            IEnumerable<UserViewModel> users = await userService.GetUsersAsync();
+            return View(users);
         }
 
         public IActionResult Add()
@@ -30,40 +30,40 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(GenreAddEditViewModel genre)
+        public async Task<IActionResult> Add(UserAddEditViewModel ticket)
         {
             if (!ModelState.IsValid)
             {
-                return View(genre);
+                return View(ticket);
             }
 
-            await genreService.AddGenreAsync(genre);
+            await userService.AddUserAsync(ticket);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            GenreAddEditViewModel? model = await genreService.GetEditGenreModelAsync(id);
+            UserAddEditViewModel? model = await userService.GetEditUserModelAsync(id);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, GenreAddEditViewModel genre)
+        public async Task<IActionResult> Edit(string id, TicketAddEditViewModel ticket)
         {
             if (!ModelState.IsValid)
             {
-                return View(genre);
+                return View(ticket);
             }
 
-            await genreService.EditGenreAsync(id, genre);
+            await userService.EditUserAsync(id, ticket);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await genreService.DeleteGenreAsync(id);
+            await userService.DeleteUserAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

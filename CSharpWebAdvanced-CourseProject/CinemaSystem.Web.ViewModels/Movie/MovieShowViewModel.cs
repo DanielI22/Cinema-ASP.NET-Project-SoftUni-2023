@@ -1,7 +1,5 @@
 ﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class MovieShowViewModel
     {
         public Guid Id { get; set; }

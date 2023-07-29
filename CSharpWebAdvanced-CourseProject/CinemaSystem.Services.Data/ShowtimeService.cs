@@ -59,7 +59,7 @@
                 showtime.TicketPrice = model.TicketPrice;
                 showtime.CinemaId = model.CinemaId;
                 showtime.MovieId = model.MovieId;
-                showtime.StartTime = model.StartTime;            
+                showtime.StartTime = model.StartTime;
 
                 await dbContext.SaveChangesAsync();
             }
@@ -67,21 +67,21 @@
 
         public async Task<ShowtimeAddEditViewModel?> GetEditShowtimeModelAsync(string id)
         {
-               var cinemas = await dbContext.Cinemas
-               .Where(c => c.isActive)
-               .Select(c => new CinemaViewModel
-               {
-                   Id = c.Id,
-                   Name = c.Name
-               }).ToListAsync();
+            var cinemas = await dbContext.Cinemas
+            .Where(c => c.isActive)
+            .Select(c => new CinemaViewModel
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).ToListAsync();
 
-               var movies = await dbContext.Movies
-               .Where(m => m.isActive)
-               .Select(m => new ShowtimeMovieViewModel
-               {
-                   Id = m.Id,
-                   Title = m.Title
-               }).ToListAsync();
+            var movies = await dbContext.Movies
+            .Where(m => m.isActive)
+            .Select(m => new ShowtimeMovieViewModel
+            {
+                Id = m.Id,
+                Title = m.Title
+            }).ToListAsync();
 
             return await dbContext.Showtimes
                 .Where(sh => sh.Id.ToString() == id)

@@ -2,7 +2,6 @@
 {
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
-    using System;
 
     public interface IMovieService
     {

@@ -1,7 +1,6 @@
 ﻿namespace CinemaSystem.Web.ViewModels.Showtime
 {
     using CinemaSystem.Web.ViewModels.Cinema;
-    using CinemaSystem.Web.ViewModels.Movie;
     using System.ComponentModel.DataAnnotations;
     using static CinemaSystem.Common.EntityValidationConstants.Showtime;
 

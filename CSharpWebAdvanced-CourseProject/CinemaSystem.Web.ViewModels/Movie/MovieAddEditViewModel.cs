@@ -1,7 +1,6 @@
 ﻿namespace CinemaSystem.Web.ViewModels.Movie
 {
     using System.ComponentModel.DataAnnotations;
-    using CinemaSystem.Web.ViewModels.Genre;
     using static CinemaSystem.Common.EntityValidationConstants.Movie;
 
     public class MovieAddEditViewModel

@@ -1,14 +1,14 @@
 ﻿namespace CinemaSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel.DataAnnotations;
     using Microsoft.EntityFrameworkCore;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Ticket
     {
         public Ticket()
         {
-            Id = Guid.NewGuid();    
+            Id = Guid.NewGuid();
         }
 
         [Key]

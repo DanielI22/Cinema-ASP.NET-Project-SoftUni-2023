@@ -61,7 +61,7 @@
         {
             return await dbContext.Cinemas
                .Where(c => c.isActive)
-               .Select (c => new CinemaViewModel
+               .Select(c => new CinemaViewModel
                {
                    Id = c.Id,
                    Name = c.Name,

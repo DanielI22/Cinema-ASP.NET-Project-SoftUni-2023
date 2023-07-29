@@ -1,10 +1,9 @@
 ﻿namespace CinemaSystem.Common
 {
-    using System.Data;
     using static CinemaSystem.Common.GeneralApplicationConstants;
     public static class EntityValidationConstants
     {
-        public static class Genre 
+        public static class Genre
         {
             public const int NameMaxLength = 50;
             public const int NameMinLength = 2;
@@ -23,7 +22,7 @@
 
             public const int PosterImageUrlMaxLength = 2048;
         }
-        
+
         public static class Cinema
         {
             public const int NameMaxLength = 50;

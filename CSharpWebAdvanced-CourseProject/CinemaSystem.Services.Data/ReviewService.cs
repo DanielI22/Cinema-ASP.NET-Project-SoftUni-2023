@@ -1,6 +1,5 @@
 ﻿namespace CinemaSystem.Services.Data
 {
-    using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Review;
@@ -28,7 +27,7 @@
         public async Task<Review> GetReviewByIdAsync(string reviewId)
         {
             Review? review = await dbContext.Reviews.FirstOrDefaultAsync(r => r.Id.ToString() == reviewId);
-            if(review == null)
+            if (review == null)
             {
                 throw new InvalidOperationException("Review not found");
             }
