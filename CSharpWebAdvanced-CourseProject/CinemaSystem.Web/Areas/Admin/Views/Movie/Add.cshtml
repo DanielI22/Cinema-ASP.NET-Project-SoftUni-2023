@@ -38,9 +38,61 @@
         <span asp-validation-for="ReleaseYear" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary mt-3" style="width:100%">Add</button>
-</form>
+    </form>
+    <h2 class="mt-5">Add with OMDb</h2>
+    <form asp-action="AddTitle">
+        <h3>By Title and Year</h3>
+        <div class="form-group">
+            <label class="pt-3">Title</label>
+            <input id="title" name="Title" class="form-control input-text" />
+        </div>
+        <div class="form-group">
+            <label class="pt-3">Year</label>
+            <input type="number" id="year" name="Year" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 submit-button" style="width:100%" disabled>Add</button>
+    </form>
+    <form asp-action="AddId">
+    <h3>By IMDb Id</h3>
+    <a  target="_blank" href="https://www.imdb.com/chart/top/?ref_=nv_mv_250">Check IMDb top movies id-s</a>
+    <div class="form-group">
+        <label class="pt-3">IMDb ID</label>
+            <input id="imdbTag" name="ImdbTag" class="form-control input-text" />
+    </div>
+        <button type="submit" class="btn btn-primary mt-3 submit-button" style="width:100%" disabled>Add</button>
+    </form>
 </div>
 
 @section Scripts {
+    <script>
+        $(document).ready(function() {
+        // Get references to the input and button elements
+        var $inputs = $('.input-text');
+        var $buttons = $('.submit-button');
+
+        // Add an event listener to the input fields
+        $inputs.on('input', function() {
+            updateButtonState();
+        });
+
+        // Function to enable or disable buttons based on input values
+        function updateButtonState() {
+            $buttons.each(function(index) {
+                // Check if the corresponding input has any text
+                var inputValue = $inputs.eq(index).val().trim();
+                if (inputValue !== '') {
+                    // If there is text, enable the button
+                    $(this).prop('disabled', false);
+                } else {
+                    // If there is no text, disable the button
+                    $(this).prop('disabled', true);
+                }
+            });
+        }
+
+        // Call the function initially to set the initial state of the buttons
+        updateButtonState();
+    });
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

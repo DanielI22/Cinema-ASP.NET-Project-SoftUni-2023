@@ -49,19 +49,8 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Clear()
+        public IActionResult Clear()
         {
-            IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();
-            IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
-
-            var viewModel = new MoviesViewModel
-            {
-                Movies = movies,
-                Genres = genres,
-                SearchName = null,
-                SelectedGenreId = 0
-            };
-
             return RedirectToAction(nameof(All));
         }
 

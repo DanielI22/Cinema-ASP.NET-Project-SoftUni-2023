@@ -50,6 +50,7 @@
         {
             public const int UsernameMaxLength = 20;
             public const int UsernameMinLength = 1;
+            public const int PasswordMinLength = 4;
         }
 
         public static class Ticket

@@ -1,27 +1,31 @@
-﻿@model List<GenreViewModel>
+﻿@model List<UserViewModel>
 @{
-    ViewData["Title"] = "Genres";
+    ViewData["Title"] = "Users";
 }
-<h1>Genres Dashboard</h1>
+<h1>Users Dashboard</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Add">Add New Genre</a>
+    <a class="btn btn-primary" asp-action="Add">Add New User</a>
 </p>
 
 <table class="table-responsive text-muted">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>IsAdmin</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var genre in Model)
+        @foreach (var user in Model)
         {
             <tr>
-                <td>@genre.Name</td>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.IsAdmin</td>
                 <td>
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@genre.Id">Edit</a>
-                    <form id="deleteForm" method="post" asp-action="Delete" asp-route-id="@genre.Id" onclick="return confirm('Are you sure you want to delete this genre?')">
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                    <form id="deleteForm" method="post" asp-action="Delete" asp-route-id="@user.Id" onclick="return confirm('Are you sure you want to delete this user?')">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>

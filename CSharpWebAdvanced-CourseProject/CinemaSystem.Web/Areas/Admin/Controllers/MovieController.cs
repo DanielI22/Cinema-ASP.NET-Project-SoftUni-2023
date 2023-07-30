@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
     using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
     [Area("Admin")]
     [Authorize(Roles = AdminRoleName)]
@@ -41,6 +42,44 @@
             }
 
             await movieService.AddMovieAsync(movie);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTitle(string title, int year)
+        {
+            if (title == null)
+            {
+                return RedirectToAction(nameof(Add));
+            }
+            try
+            {
+                await movieService.AddMovieApiTitleAsync(title, year);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "Incorrect movie identifiers";
+                return RedirectToAction(nameof(Add));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddId(string imdbTag)
+        {
+            if(imdbTag == null)
+            {
+                return RedirectToAction(nameof(Add));
+            }
+            try
+            {
+                await movieService.AddMovieApiIdAsync(imdbTag);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "Incorrect movie identifiers";
+                return RedirectToAction(nameof(Add));
+            }
             return RedirectToAction(nameof(Index));
         }
 

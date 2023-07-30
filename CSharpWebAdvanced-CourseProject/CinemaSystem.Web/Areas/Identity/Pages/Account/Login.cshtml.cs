@@ -112,10 +112,6 @@ namespace CinemaSystem.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    if (User.IsAdmin())
-                    {
-                        return RedirectToAction("Dashboard", "Admin", new { area = "Admin" });
-                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

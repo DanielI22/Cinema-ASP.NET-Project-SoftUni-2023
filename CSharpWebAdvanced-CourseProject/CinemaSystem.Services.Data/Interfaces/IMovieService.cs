@@ -18,5 +18,7 @@
         Task<MovieAddEditViewModel?> GetEditMovieModelAsync(string id);
         Task EditMovieAsync(string id, MovieAddEditViewModel movie);
         Task DeleteMovieAsync(string id);
+        Task AddMovieApiIdAsync(string imdbTag);
+        Task AddMovieApiTitleAsync(string title, int year);
     }
 }

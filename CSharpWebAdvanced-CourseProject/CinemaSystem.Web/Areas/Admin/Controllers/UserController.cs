@@ -2,7 +2,9 @@
 {
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.ViewModels.Ticket;
+    using CinemaSystem.Web.ViewModels.User;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
@@ -30,34 +32,49 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(UserAddEditViewModel ticket)
+        public async Task<IActionResult> Add(UserAddViewModel user)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(ticket);
+                var result = await userService.AddUserAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
 
-            await userService.AddUserAsync(ticket);
-            return RedirectToAction(nameof(Index));
+            return View(user);
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            UserAddEditViewModel? model = await userService.GetEditUserModelAsync(id);
+            UserEditViewModel? model = await userService.GetEditUserModelAsync(id);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, TicketAddEditViewModel ticket)
+        public async Task<IActionResult> Edit(string id, UserEditViewModel user)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(ticket);
+                var result = await userService.EditUserAsync(id, user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
 
-            await userService.EditUserAsync(id, ticket);
-            return RedirectToAction(nameof(Index));
+            return View(user);
         }
 
         [HttpPost]

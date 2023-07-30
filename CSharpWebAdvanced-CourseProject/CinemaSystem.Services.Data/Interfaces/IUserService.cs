@@ -1,12 +1,18 @@
 ﻿namespace CinemaSystem.Services.Data.Interfaces
 {
-    using System;
+    using CinemaSystem.Data.Models;
+    using CinemaSystem.Web.ViewModels.Ticket;
+    using CinemaSystem.Web.ViewModels.User;
+    using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
-    internal interface IUserService
+    public interface IUserService
     {
+        Task<IdentityResult> AddUserAsync(UserAddViewModel user);
+        Task DeleteUserAsync(string id);
+        Task<IdentityResult> EditUserAsync(string id, UserEditViewModel user);
+        Task<UserEditViewModel?> GetEditUserModelAsync(string id);
+        Task<IEnumerable<UserViewModel>> GetUsersAsync();
     }
 }

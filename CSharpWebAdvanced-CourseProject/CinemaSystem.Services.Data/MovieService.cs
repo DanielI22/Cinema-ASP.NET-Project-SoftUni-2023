@@ -6,6 +6,8 @@
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -14,11 +16,13 @@
     {
         private readonly CinemaSystemDbContext dbContext;
         private readonly IReviewService reviewService;
+        private readonly IConfiguration configuration;
 
-        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService)
+        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService , IConfiguration configuration)
         {
             this.dbContext = dbContext;
             this.reviewService = reviewService;
+            this.configuration = configuration;
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds)
@@ -234,6 +238,120 @@
                  Id = m.Id,
                  Title = m.Title
              }).ToListAsync();
+        }
+
+        public async Task AddMovieApiIdAsync(string imdbTag)
+        {
+            string apiKey = configuration["MyApiSettings:ApiKey"];
+            using HttpClient httpClient = new HttpClient();
+            string apiUrl = $"http://www.omdbapi.com/?apikey={apiKey}&i={Uri.EscapeDataString(imdbTag)}";
+            HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                if(content != null)
+                {
+                    MovieApiModel movieModel = JsonConvert.DeserializeObject<MovieApiModel>(content)!;
+                    if (movieModel.Title != null && movieModel.Year != null)
+                    {
+                        await ConvertApiModelToMovie(movieModel);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Invalid movie format!");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Invalid movie format!");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("No movie is found!");
+            }
+        }
+
+        public async Task AddMovieApiTitleAsync(string title, int year)
+        {
+            string apiKey = configuration["MyApiSettings:ApiKey"];
+            string apiUrl = $"http://www.omdbapi.com/?apikey={apiKey}&t={Uri.EscapeDataString(title)}";
+            if (year != 0)
+            {
+                apiUrl += $"&y={year}";
+            }
+            using HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                if (content != null)
+                {
+                    MovieApiModel movieModel = JsonConvert.DeserializeObject<MovieApiModel>(content)!;
+                    if (movieModel.Title != null && movieModel.Year != null)
+                    {
+                        await ConvertApiModelToMovie(movieModel);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Invalid movie format!");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Invalid movie format!");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("No movie is found!");
+            }
+        }
+
+        private async Task ConvertApiModelToMovie(MovieApiModel movieApiModel)
+        {
+            var movie = new Movie
+            {
+                Title = movieApiModel.Title,
+                ReleaseYear = int.Parse(movieApiModel.Year),
+                Description = movieApiModel.Plot,
+                PosterImageUrl = movieApiModel.Poster
+            };
+
+            var genreNames = movieApiModel.Genre?.Split(", ");
+
+            if (genreNames != null && genreNames.Length > 0)
+            {
+                foreach (var genreName in genreNames)
+                {
+                    var existingGenre = await dbContext.Genres
+                        .Where(g => g.isActive)
+                        .FirstOrDefaultAsync(g => g.Name == genreName);
+
+                    if (existingGenre == null)
+                    {
+                        var newGenre = new Genre { Name = genreName };
+                        MovieGenre movieGenre = new MovieGenre
+                        {
+                            MovieId = movie.Id,
+                            Genre = newGenre,
+                        };
+                        dbContext.Genres.Add(newGenre);
+                        movie.MovieGenres.Add(movieGenre);
+                    }
+                    else
+                    {
+                        MovieGenre movieGenre = new MovieGenre
+                        {
+                            MovieId = movie.Id,
+                            Genre = existingGenre,
+                        };
+                        movie.MovieGenres.Add(movieGenre);
+                    }
+                }
+            }
+            dbContext.Movies.Add(movie);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

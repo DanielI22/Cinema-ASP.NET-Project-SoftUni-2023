@@ -75,7 +75,7 @@
         {
             List<DateTime> availableDates = await dbContext.Cinemas
                 .Where(c => c.Id == cinemaId)
-                .SelectMany(c => c.Showtimes.Select(s => s.StartTime.Date))
+                .SelectMany(c => c.Showtimes.Where(sh => sh.isActive).Select(s => s.StartTime.Date))
                 .Distinct()
                 .ToListAsync();
 

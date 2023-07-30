@@ -26,7 +26,8 @@ namespace CinemaSystem.Web.Areas.Identity.Pages.Account.Manage
             string? userId = User.GetId();
 
             UserTickets = await dbContext.Tickets
-                .Where(t => t.UserId.ToString() == userId)
+                .Where(t => t.UserId.ToString() == userId && t.isActive)
+                .OrderBy(t => t.Showtime.StartTime)
                 .Include(t => t.Showtime)
                 .ThenInclude(s => s.Movie)
                 .ThenInclude(m => m.MovieGenres)
