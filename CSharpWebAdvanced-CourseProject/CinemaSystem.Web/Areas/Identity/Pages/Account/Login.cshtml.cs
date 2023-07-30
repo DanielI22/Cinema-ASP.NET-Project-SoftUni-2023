@@ -3,7 +3,6 @@
 #nullable disable
 
 using CinemaSystem.Data.Models;
-using CinemaSystem.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

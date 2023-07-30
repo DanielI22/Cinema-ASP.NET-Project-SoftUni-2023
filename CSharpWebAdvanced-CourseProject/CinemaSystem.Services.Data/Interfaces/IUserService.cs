@@ -1,7 +1,5 @@
 ﻿namespace CinemaSystem.Services.Data.Interfaces
 {
-    using CinemaSystem.Data.Models;
-    using CinemaSystem.Web.ViewModels.Ticket;
     using CinemaSystem.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;

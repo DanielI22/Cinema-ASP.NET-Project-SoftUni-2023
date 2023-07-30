@@ -22,7 +22,7 @@
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<MovieShowViewModel> movies = await movieService.GetAllMoviesAsync();
+            IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();
             return View(movies);
         }
 
@@ -67,7 +67,7 @@
         [HttpPost]
         public async Task<IActionResult> AddId(string imdbTag)
         {
-            if(imdbTag == null)
+            if (imdbTag == null)
             {
                 return RedirectToAction(nameof(Add));
             }

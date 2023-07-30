@@ -1,7 +1,7 @@
 ﻿@model MovieCardViewModel
 
 
-    <a class="text-decoration-none text-muted" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
+    <a class="text-decoration-none text-muted" asp-area="" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
     <div class="card bg-dark">
         <img src="@Model.PosterUrl" class="card-img" alt="@Model.Title" style="height: 25rem">
         <div class="card-body">

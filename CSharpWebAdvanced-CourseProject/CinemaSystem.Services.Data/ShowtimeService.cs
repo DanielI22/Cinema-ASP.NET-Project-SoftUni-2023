@@ -120,6 +120,7 @@
         {
             return await dbContext.Showtimes
               .Where(sh => sh.isActive)
+              .OrderBy(sh => sh.StartTime)
               .Select(sh => new ShowtimeDatailViewModel
               {
                   Id = sh.Id.ToString(),

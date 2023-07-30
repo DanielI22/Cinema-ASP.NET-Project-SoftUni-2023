@@ -65,6 +65,7 @@
         {
             return await dbContext.Genres
                   .Where(g => g.isActive)
+                  .OrderBy(g => g.Name)
                   .Select(g => new GenreViewModel
                   {
                       Id = g.Id,

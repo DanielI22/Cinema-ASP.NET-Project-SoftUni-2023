@@ -106,6 +106,7 @@
         {
             return await dbContext.Tickets
              .Where(t => t.isActive)
+             .OrderBy(t => t.User.UserName)
              .Select(t => new TicketViewModel
              {
                  Id = t.Id.ToString(),

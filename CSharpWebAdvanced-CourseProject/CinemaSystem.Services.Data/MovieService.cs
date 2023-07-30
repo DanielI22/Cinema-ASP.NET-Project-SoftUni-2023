@@ -18,7 +18,7 @@
         private readonly IReviewService reviewService;
         private readonly IConfiguration configuration;
 
-        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService , IConfiguration configuration)
+        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService, IConfiguration configuration)
         {
             this.dbContext = dbContext;
             this.reviewService = reviewService;
@@ -121,6 +121,7 @@
             return await dbContext.Movies.Where(m => m.isActive)
                  .Include(m => m.MovieGenres)
                  .ThenInclude(mg => mg.Genre)
+                 .OrderBy(m => m.ReleaseYear)
                  .Select(m => new MovieShowViewModel
                  {
                      Id = m.Id,
@@ -249,7 +250,7 @@
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                if(content != null)
+                if (content != null)
                 {
                     MovieApiModel movieModel = JsonConvert.DeserializeObject<MovieApiModel>(content)!;
                     if (movieModel.Title != null && movieModel.Year != null)

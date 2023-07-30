@@ -5,6 +5,7 @@
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Cinema;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -12,10 +13,12 @@
     public class CinemaService : ICinemaService
     {
         private readonly CinemaSystemDbContext dbContext;
+        private readonly IMemoryCache memoryCache;
 
-        public CinemaService(CinemaSystemDbContext dbContext)
+        public CinemaService(CinemaSystemDbContext dbContext, IMemoryCache memoryCache)
         {
             this.dbContext = dbContext;
+            this.memoryCache = memoryCache;
         }
 
         public async Task AddCinemaAsync(CinemaAddEditViewModel model)
@@ -59,8 +62,11 @@
 
         public async Task<IEnumerable<CinemaViewModel>> GetAllCinemasAsync()
         {
-            return await dbContext.Cinemas
+            if (!memoryCache.TryGetValue("Cinemas", out List<CinemaViewModel> cinemas))
+            {
+                cinemas = await dbContext.Cinemas
                .Where(c => c.isActive)
+               .OrderBy(c => c.Name)
                .Select(c => new CinemaViewModel
                {
                    Id = c.Id,
@@ -69,6 +75,10 @@
                    ImageUrl = c.ImageUrl,
                })
                .ToListAsync();
+
+                memoryCache.Set("Cinemas", cinemas, TimeSpan.FromMinutes(1));
+            }
+            return cinemas;
         }
 
         public async Task<IEnumerable<DateTime>> GetCinemaAvailableDatesAsync(int cinemaId)

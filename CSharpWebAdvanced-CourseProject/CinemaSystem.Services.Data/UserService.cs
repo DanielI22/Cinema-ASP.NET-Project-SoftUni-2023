@@ -3,14 +3,11 @@
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
-    using CinemaSystem.Web.ViewModels.Genre;
-    using CinemaSystem.Web.ViewModels.Ticket;
     using CinemaSystem.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using static CinemaSystem.Common.EntityValidationConstants;
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
     public class UserService : IUserService
@@ -34,7 +31,7 @@
 
             var result = await userManager.CreateAsync(user, model.Password);
 
-            if(result.Succeeded && model.IsAdmin)
+            if (result.Succeeded && model.IsAdmin)
             {
                 await userManager.AddToRoleAsync(user, AdminRoleName);
             }
@@ -48,7 +45,7 @@
 
             if (user != null)
             {
-               await userManager.DeleteAsync(user);
+                await userManager.DeleteAsync(user);
             }
         }
 
@@ -60,7 +57,7 @@
 
             var result = await userManager.UpdateAsync(user);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return result;
             }
@@ -109,7 +106,7 @@
                     Username = user.UserName,
                     Email = user.Email,
                     IsAdmin = isAdmin
-                }; 
+                };
                 userModels.Add(userModel);
             }
 
