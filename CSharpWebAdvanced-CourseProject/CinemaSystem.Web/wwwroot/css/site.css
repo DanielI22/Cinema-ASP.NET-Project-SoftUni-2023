@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    margin-bottom: 80px;
+    margin-bottom: 150px;
 }
 
 .showtime-box {
@@ -72,33 +72,4 @@ i.fa-chair.reserved {
 
 i.fa-chair.selected {
     color: #fff;
-}
-
-
-@media (max-width: 575.98px) {
-    .movie-block img {
-        height: 12rem !important;
-    }
-
-    .movie-block h5 {
-        display: none;
-    }
-
-    .movie-block p {
-        display: none;
-    }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .movie-block img {
-        height: 22rem !important;
-    }
-
-    .movie-block h5 {
-        font-size: 0.7rem !important;
-    }
-
-    .movie-block p {
-        display: none;
-    }
 }

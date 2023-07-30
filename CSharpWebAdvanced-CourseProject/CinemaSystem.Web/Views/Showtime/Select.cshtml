@@ -37,41 +37,31 @@
     }
     @if (Model.Movies.Any())
     {
-        <table class="table table-bordered text-muted">
-            <thead>
-                <tr>
-                    <th>Movie</th>
-                    <th>Showtimes</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var movieShowtime in Model.Movies)
-                {
-                    <tr>
-                        <td>
-                            <div class="card" style="width: 15rem;">
-                                <partial name="_MovieCardPartial" model="@movieShowtime.MovieCard" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex flex-wrap">
-                                @foreach (var showtime in movieShowtime.Showtimes)
-                                {
-                                     <a class="text-decoration-none" asp-controller="Ticket" asp-action="Reserve" asp-route-showtimeId="@showtime.Id">
-                                    <div class="showtime-box" data-toggle="tooltip" data-placement="top" title="@showtime.TicketPrice BGN">
-                                        @showtime.StartTime
-                                    </div>
-                                    </a>
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="row">
+        @foreach (var movieShowtime in Model.Movies)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card">
+                    <partial name="_MovieCardPartial" model="@movieShowtime.MovieCard" />
+                </div>
+
+                <div class="d-flex flex-wrap">
+                    @foreach (var showtime in movieShowtime.Showtimes)
+                    {
+                        <a class="text-decoration-none" asp-controller="Ticket" asp-action="Reserve" asp-route-showtimeId="@showtime.Id">
+                        <div class="showtime-box" data-toggle="tooltip" data-placement="bottom" title="@showtime.TicketPrice BGN">
+                            @showtime.StartTime
+                        </div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        }
+        </div>
+
     }
 </div>
-
 @section Scripts {
     <script>
         $(function () {

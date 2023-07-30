@@ -22,7 +22,7 @@
                                     var seatId = (row - 1) * SeatsPerRow + seatNumber;
                                     var isReserved = Model.ReservedSeats.Contains(seatId);
                                     var seatClass = isReserved ? "seat reserved" : "seat";
-                                    <div class="@seatClass" data-seat-id="@seatId">
+                                    <div class="@seatClass col-2" data-seat-id="@seatId">
                                         <i class="fas fa-chair"></i>
                                     </div>
                                 }
