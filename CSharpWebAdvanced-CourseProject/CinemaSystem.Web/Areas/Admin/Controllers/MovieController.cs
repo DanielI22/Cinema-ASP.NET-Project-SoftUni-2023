@@ -8,7 +8,7 @@
     using static CinemaSystem.Common.GeneralApplicationConstants;
     using static CinemaSystem.Common.NotificationMessagesConstants;
 
-    [Area("Admin")]
+    [Area(AdminArea)]
     [Authorize(Roles = AdminRoleName)]
     public class MovieController : Controller
     {
@@ -20,6 +20,8 @@
             this.movieService = movieService;
             this.genreService = genreService;
         }
+
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
             IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();

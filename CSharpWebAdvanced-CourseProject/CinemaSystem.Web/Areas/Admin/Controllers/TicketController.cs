@@ -10,20 +10,16 @@
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
 
-    [Area("Admin")]
+    [Area(AdminArea)]
     [Authorize(Roles = AdminRoleName)]
     public class TicketController : Controller
     {
         private readonly ITicketService ticketService;
-        private readonly IShowtimeService showtimeService;
-        private readonly UserManager<ApplicationUser> userManager;
 
 
-        public TicketController(ITicketService ticketService, UserManager<ApplicationUser> userManager, IShowtimeService showtimeService)
+        public TicketController(ITicketService ticketService)
         {
             this.ticketService = ticketService;
-            this.userManager = userManager;
-            this.showtimeService = showtimeService;
         }
         public async Task<IActionResult> Index()
         {
@@ -33,11 +29,7 @@
 
         public async Task<IActionResult> Add()
         {
-            var model = new TicketAddEditViewModel();
-            var showtimes = await showtimeService.GetShowtimesAsync();
-            var allUsers = await userManager.Users.ToListAsync();
-            model.Showtimes = showtimes.ToDictionary(s => s.Id, s => s.CinemaName + " - " + s.MovieName + " - " + s.StartTime.ToString());
-            model.Users = allUsers.ToDictionary(user => user.Id.ToString(), user => user.UserName);
+            var model = await ticketService.GetAddTicketModelAsync();
             return View(model);
         }
 

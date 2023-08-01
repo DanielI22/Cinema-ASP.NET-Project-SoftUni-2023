@@ -64,6 +64,16 @@
             }
         }
 
+        public async Task<TicketAddEditViewModel?> GetAddTicketModelAsync()
+        {
+            var model = new TicketAddEditViewModel();
+            var showtimes = await showtimeService.GetShowtimesAsync();
+            var allUsers = await userManager.Users.ToListAsync();
+            model.Showtimes = showtimes.ToDictionary(s => s.Id, s => s.CinemaName + " - " + s.MovieName + " - " + s.StartTime.ToString());
+            model.Users = allUsers.ToDictionary(user => user.Id.ToString(), user => user.UserName);
+            return model;
+        }
+
         public async Task<TicketAddEditViewModel?> GetEditTicketModelAsync(string id)
         {
             var showtimes = await showtimeService.GetShowtimesAsync();

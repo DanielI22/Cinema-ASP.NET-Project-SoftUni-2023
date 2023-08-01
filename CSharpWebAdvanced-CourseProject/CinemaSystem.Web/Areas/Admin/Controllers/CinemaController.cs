@@ -7,7 +7,7 @@
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
 
-    [Area("Admin")]
+    [Area(AdminArea)]
     [Authorize(Roles = AdminRoleName)]
     public class CinemaController : Controller
     {
@@ -17,6 +17,8 @@
         {
             this.cinemaService = cinemaService;
         }
+
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
             IEnumerable<CinemaViewModel> cinemas = await cinemaService.GetAllCinemasAsync();

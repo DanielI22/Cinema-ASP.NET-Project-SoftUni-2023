@@ -5,7 +5,6 @@
 
     public interface IMovieService
     {
-        Task<IEnumerable<MovieShowViewModel>> GetAllMoviesAsync();
         Task<IEnumerable<ShowtimeMovieViewModel>> GetAllShowtimeMoviesAsync();
         Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds);
 

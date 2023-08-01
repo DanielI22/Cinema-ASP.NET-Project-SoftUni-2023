@@ -18,15 +18,26 @@
             this.cinemaService = cinemaService;
         }
 
+       
         [AllowAnonymous]
-        public async Task<IActionResult> Select(int cinemaId)
+        public async Task<IActionResult> Select(int cinemaId, string selectedDate)
         {
+            ShowtimeSelectViewModel viewModel;
             IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
 
+            if (string.IsNullOrEmpty(selectedDate))
+            {
+                selectedDate = dates.FirstOrDefault().ToString();
+            }
 
-            ShowtimeSelectViewModel viewModel = new ShowtimeSelectViewModel
+            DateTime date = DateTime.Parse(selectedDate);
+            IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, date);
+
+            viewModel = new ShowtimeSelectViewModel
             {
                 CinemaId = cinemaId,
+                SelectedDate = date.ToShortDateString(),
+                Movies = movies,
                 Dates = dates
             };
 
@@ -44,6 +55,8 @@
 
                 viewModel.Movies = movies;
                 viewModel.SelectedDate = selectedDate.ToShortDateString();
+
+                return RedirectToAction("Select", new { cinemaId, selectedDate = viewModel.SelectedDate });
             }
 
             IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);

@@ -9,6 +9,7 @@
         public const int SeatsPerRow = 5;
         public const int CurrentNumberOfSeats = 15;
         public const string AdminRoleName = "Administrator";
+        public const string AdminArea = "Admin";
         public const string DevelopmentAdminEmail = "admin@admin";
     }
 }

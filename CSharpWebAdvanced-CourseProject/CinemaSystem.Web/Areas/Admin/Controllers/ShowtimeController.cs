@@ -7,7 +7,7 @@
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
 
-    [Area("Admin")]
+    [Area(AdminArea)]
     [Authorize(Roles = AdminRoleName)]
     public class ShowtimeController : Controller
     {

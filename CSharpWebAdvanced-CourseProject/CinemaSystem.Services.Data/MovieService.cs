@@ -116,27 +116,6 @@
             return movieModel;
         }
 
-        public async Task<IEnumerable<MovieShowViewModel>> GetAllMoviesAsync()
-        {
-            return await dbContext.Movies.Where(m => m.isActive)
-                 .Include(m => m.MovieGenres)
-                 .ThenInclude(mg => mg.Genre)
-                 .OrderBy(m => m.ReleaseYear)
-                 .Select(m => new MovieShowViewModel
-                 {
-                     Id = m.Id,
-                     Title = m.Title,
-                     PosterImageUrl = m.PosterImageUrl,
-                     ReleaseYear = m.ReleaseYear,
-                     Description = m.Description,
-                     Genres = m.MovieGenres.Select(mg => new GenreViewModel
-                     {
-                         Id = mg.GenreId,
-                         Name = mg.Genre.Name
-                     })
-                 }).ToListAsync();
-        }
-
         public async Task AddMovieAsync(MovieAddEditViewModel model)
         {
             Movie movie = new Movie
