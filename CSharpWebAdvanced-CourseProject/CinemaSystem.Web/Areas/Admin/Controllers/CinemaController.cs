@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
 
     [Area(AdminArea)]
@@ -21,8 +22,16 @@
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<CinemaViewModel> cinemas = await cinemaService.GetAllCinemasAsync();
-            return View(cinemas);
+            try
+            {
+                IEnumerable<CinemaViewModel> cinemas = await cinemaService.GetAllCinemasAsync();
+                return View(cinemas);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         public IActionResult Add()
@@ -38,15 +47,42 @@
                 return View(cinema);
             }
 
-            await cinemaService.AddCinemaAsync(cinema);
+            try
+            {
+                await cinemaService.AddCinemaAsync(cinema);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            CinemaAddEditViewModel? model = await cinemaService.GetEditCinemaModelAsync(id);
-
-            return View(model);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                CinemaAddEditViewModel? model = await cinemaService.GetEditCinemaModelAsync(id);
+                if (model != null)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]
@@ -56,15 +92,34 @@
             {
                 return View(cinema);
             }
-
-            await cinemaService.EditCinemaAsync(id, cinema);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                await cinemaService.EditCinemaAsync(id, cinema);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await cinemaService.DeleteCinemaAsync(id);
+            try
+            {
+                await cinemaService.DeleteCinemaAsync(id);
+
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
     }

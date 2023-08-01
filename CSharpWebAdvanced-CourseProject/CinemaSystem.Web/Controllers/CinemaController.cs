@@ -4,6 +4,9 @@
     using CinemaSystem.Web.ViewModels.Cinema;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
+
 
     [Authorize]
     public class CinemaController : Controller
@@ -18,8 +21,16 @@
         [AllowAnonymous]
         public async Task<IActionResult> All()
         {
-            IEnumerable<CinemaViewModel> cinemas = await cinemaService.GetAllCinemasAsync();
-            return View(cinemas);
+            try
+            {
+                IEnumerable<CinemaViewModel> cinemas = await cinemaService.GetAllCinemasAsync();
+                return View(cinemas);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

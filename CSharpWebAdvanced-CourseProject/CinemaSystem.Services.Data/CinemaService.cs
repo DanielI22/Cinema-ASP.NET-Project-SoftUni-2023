@@ -5,7 +5,7 @@
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Cinema;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -13,12 +13,12 @@
     public class CinemaService : ICinemaService
     {
         private readonly CinemaSystemDbContext dbContext;
-        private readonly IMemoryCache memoryCache;
+        private readonly ILogger<CinemaService> logger;
 
-        public CinemaService(CinemaSystemDbContext dbContext, IMemoryCache memoryCache)
+        public CinemaService(CinemaSystemDbContext dbContext, ILogger<CinemaService> logger)
         {
             this.dbContext = dbContext;
-            this.memoryCache = memoryCache;
+            this.logger = logger;
         }
 
         public async Task AddCinemaAsync(CinemaAddEditViewModel model)
@@ -42,8 +42,14 @@
             if (cinema != null)
             {
                 cinema.isActive = false;
+                await dbContext.SaveChangesAsync();
             }
-            await dbContext.SaveChangesAsync();
+            else
+            {
+                string error = "Cinema could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
         }
 
         public async Task EditCinemaAsync(string id, CinemaAddEditViewModel model)
@@ -58,27 +64,27 @@
                 cinema.ImageUrl = model.ImageUrl;
                 await dbContext.SaveChangesAsync();
             }
+            else
+            {
+                string error = "Cinema could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
         }
 
         public async Task<IEnumerable<CinemaViewModel>> GetAllCinemasAsync()
         {
-            if (!memoryCache.TryGetValue("Cinemas", out List<CinemaViewModel> cinemas))
-            {
-                cinemas = await dbContext.Cinemas
-               .Where(c => c.isActive)
-               .OrderBy(c => c.Name)
-               .Select(c => new CinemaViewModel
-               {
-                   Id = c.Id,
-                   Name = c.Name,
-                   Address = c.Address,
-                   ImageUrl = c.ImageUrl,
-               })
-               .ToListAsync();
-
-                memoryCache.Set("Cinemas", cinemas, TimeSpan.FromMinutes(1));
-            }
-            return cinemas;
+            return await dbContext.Cinemas
+           .Where(c => c.isActive)
+           .OrderBy(c => c.Name)
+           .Select(c => new CinemaViewModel
+           {
+               Id = c.Id,
+               Name = c.Name,
+               Address = c.Address,
+               ImageUrl = c.ImageUrl,
+           })
+           .ToListAsync();
         }
 
         public async Task<IEnumerable<DateTime>> GetCinemaAvailableDatesAsync(int cinemaId)

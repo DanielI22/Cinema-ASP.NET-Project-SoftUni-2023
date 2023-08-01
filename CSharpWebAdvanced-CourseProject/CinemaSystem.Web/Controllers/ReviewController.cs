@@ -19,6 +19,7 @@
         [HttpPost]
         public async Task<IActionResult> Post(string movieId, string ReviewToAdd)
         {
+            string reviewError = "Your Review could not be post. Sorry for the inconvenience!";
             if (ModelState.IsValid)
             {
                 try
@@ -30,17 +31,17 @@
                     }
                     else
                     {
-                        TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
+                        TempData[ErrorMessage] = reviewError;
                     }
                 }
                 catch (Exception)
                 {
-                    TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
+                    TempData[ErrorMessage] = reviewError;
                 }
             }
             else
             {
-                TempData[ErrorMessage] = "Your Review could not be post. Sorry for the inconvenience!";
+                TempData[ErrorMessage] = reviewError;
             }
 
             return RedirectToAction("Details", "Movie", new { id = movieId });
@@ -49,6 +50,12 @@
         [HttpPost]
         public async Task<IActionResult> DeleteMy(string reviewId, string movieId)
         {
+            string reviewError = "Your Review could not be deleted. Sorry for the inconvenience!";
+            if (reviewId == null || movieId == null)
+            {
+                TempData[ErrorMessage] = reviewError;
+                return RedirectToAction("All", "Movies");
+            }
             try
             {
                 string? userId = User.GetId();
@@ -58,12 +65,12 @@
                 }
                 else
                 {
-                    TempData[ErrorMessage] = "Your Review could not be deleted. Sorry for the inconvenience!";
+                    TempData[ErrorMessage] = reviewError;
                 }
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = "Your Review could not be deleted. Sorry for the inconvenience!";
+                TempData[ErrorMessage] = reviewError;
             }
             return RedirectToAction("Details", "Movie", new { id = movieId });
         }

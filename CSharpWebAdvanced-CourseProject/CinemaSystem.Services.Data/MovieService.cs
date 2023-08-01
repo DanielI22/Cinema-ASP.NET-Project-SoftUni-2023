@@ -81,6 +81,7 @@
                         Name = mg.Genre.Name
                     })
                 }).ToListAsync();
+
         }
 
         public async Task<MovieDetailsViewModel?> GetMovieDetailsModelAsync(string movieId, int pageNumber, int pageSize)
@@ -128,9 +129,11 @@
 
             foreach (var genreId in model.GenresId)
             {
-                MovieGenre mg = new MovieGenre();
-                mg.Movie = movie;
-                mg.GenreId = genreId;
+                MovieGenre mg = new()
+                {
+                    Movie = movie,
+                    GenreId = genreId
+                };
                 await dbContext.MovieGenre.AddAsync(mg);
             }
 

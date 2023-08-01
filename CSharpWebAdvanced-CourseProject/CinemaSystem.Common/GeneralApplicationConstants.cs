@@ -11,5 +11,6 @@
         public const string AdminRoleName = "Administrator";
         public const string AdminArea = "Admin";
         public const string DevelopmentAdminEmail = "admin@admin";
+        public const string GeneralError = "Unexpected error occurred! Please try again later or contact administrator";
     }
 }

@@ -5,6 +5,7 @@
     using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
     using static CinemaSystem.Common.NotificationMessagesConstants;
     using static CinemaSystem.Common.Utils;
 
@@ -22,13 +23,26 @@
 
         public async Task<IActionResult> Reserve(string showtimeId)
         {
+            if (showtimeId == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
+            }
             TicketSelectionViewModel ticketSelectionViewModel = new()
             {
                 ShowtimeId = showtimeId
             };
-            ticketSelectionViewModel.ReservedSeats = await ticketService.GetSelectedSeatsAsync(ticketSelectionViewModel.ShowtimeId);
+            try
+            {
+                ticketSelectionViewModel.ReservedSeats = await ticketService.GetSelectedSeatsAsync(ticketSelectionViewModel.ShowtimeId);
+                return View(ticketSelectionViewModel);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
+            }
 
-            return View(ticketSelectionViewModel);
         }
 
 

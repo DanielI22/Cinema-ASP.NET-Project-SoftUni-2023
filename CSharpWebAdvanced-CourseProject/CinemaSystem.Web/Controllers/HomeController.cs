@@ -20,6 +20,7 @@
         {
             IEnumerable<MovieCardViewModel> movieCards = await movieService.GetAllMoviesCardAsync();
             return View(movieCards);
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -29,7 +30,10 @@
             {
                 return this.View("Error404");
             }
-            return View();
+            else
+            {
+                return this.View("Error500");
+            }
         }
     }
 }

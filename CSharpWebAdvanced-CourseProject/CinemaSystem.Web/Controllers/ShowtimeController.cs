@@ -5,6 +5,9 @@
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
+
 
     [Authorize]
     public class ShowtimeController : Controller
@@ -18,51 +21,47 @@
             this.cinemaService = cinemaService;
         }
 
-       
+
         [AllowAnonymous]
         public async Task<IActionResult> Select(int cinemaId, string selectedDate)
         {
-            ShowtimeSelectViewModel viewModel;
-            IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
-
-            if (string.IsNullOrEmpty(selectedDate))
+            if (cinemaId == 0)
             {
-                selectedDate = dates.FirstOrDefault().ToString();
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
             }
-
-            DateTime date = DateTime.Parse(selectedDate);
-            IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, date);
-
-            viewModel = new ShowtimeSelectViewModel
+            try
             {
-                CinemaId = cinemaId,
-                SelectedDate = date.ToShortDateString(),
-                Movies = movies,
-                Dates = dates
-            };
+                IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
+                if (!dates.Any())
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction("Index", "Home");
+                }
 
-            return View(viewModel);
-        }
+                if (string.IsNullOrEmpty(selectedDate))
+                {
+                    selectedDate = dates.FirstOrDefault().ToString();
+                }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Select(int cinemaId, ShowtimeSelectViewModel viewModel)
-        {
-            if (!string.IsNullOrEmpty(viewModel.SelectedDate))
-            {
-                DateTime selectedDate = DateTime.Parse(viewModel.SelectedDate);
-                IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, selectedDate);
+                DateTime date = DateTime.Parse(selectedDate);
+                IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, date);
 
-                viewModel.Movies = movies;
-                viewModel.SelectedDate = selectedDate.ToShortDateString();
+                ShowtimeSelectViewModel viewModel = new ShowtimeSelectViewModel
+                {
+                    CinemaId = cinemaId,
+                    SelectedDate = date.ToShortDateString(),
+                    Movies = movies,
+                    Dates = dates
+                };
 
-                return RedirectToAction("Select", new { cinemaId, selectedDate = viewModel.SelectedDate });
+                return View(viewModel);
             }
-
-            IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
-            viewModel.Dates = dates;
-
-            return View(viewModel);
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

@@ -22,30 +22,51 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id, int pageNumber = 1, int pageSize = ReviewsPerPage)
         {
-            MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(id, pageNumber, pageSize);
-            if (model == null)
+            if (id == null)
             {
-                TempData[ErrorMessage] = "Your Movie could not be found!";
+                TempData[ErrorMessage] = GeneralError;
                 return RedirectToAction("Index", "Home");
             }
+            try
+            {
+                MovieDetailsViewModel? model = await movieService.GetMovieDetailsModelAsync(id, pageNumber, pageSize);
+                if (model == null)
+                {
+                    TempData[ErrorMessage] = "Your Movie could not be found!";
+                    return RedirectToAction("Index", "Home");
+                }
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery] MoviesViewModel moviesViewModel)
         {
-            IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(moviesViewModel.SearchName, moviesViewModel.SelectedGenreId);
-            IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
-            var viewModel = new MoviesViewModel
+            try
             {
-                Movies = movies,
-                Genres = genres,
-                SearchName = moviesViewModel.SearchName,
-                SelectedGenreId = moviesViewModel.SelectedGenreId
-            };
+                IEnumerable<MovieCardViewModel> movies = await movieService.FilterMoviesAsync(moviesViewModel.SearchName, moviesViewModel.SelectedGenreId);
+                IEnumerable<GenreViewModel> genres = await genreService.GetGenresAsync();
+                var viewModel = new MoviesViewModel
+                {
+                    Movies = movies,
+                    Genres = genres,
+                    SearchName = moviesViewModel.SearchName,
+                    SelectedGenreId = moviesViewModel.SelectedGenreId
+                };
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("All", "Movie");
+            }
         }
 
         [AllowAnonymous]
