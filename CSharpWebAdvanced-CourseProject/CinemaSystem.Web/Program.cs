@@ -26,7 +26,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<CinemaSystemDbContext>();
 
 builder.Services.AddApplicationServices(typeof(ICinemaService));
-builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
@@ -54,6 +54,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseResponseCaching();
 
 app.UseAuthentication();
 app.UseAuthorization();

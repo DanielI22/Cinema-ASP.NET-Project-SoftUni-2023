@@ -59,13 +59,13 @@
                 }
                 else
                 {
-                    TempData[ErrorMessage] = "There was an error!";
+                    TempData[ErrorMessage] = GeneralError;
                     return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = "There was an error!";
+                TempData[ErrorMessage] = GeneralError;
                 return RedirectToAction("Index", "Home");
             }
 

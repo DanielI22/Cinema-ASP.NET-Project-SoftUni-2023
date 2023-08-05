@@ -19,9 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaSystem.Web.ViewModels
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9A6A6D22-E9E9-4F72-B080-D879457F408F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaSystem.Services.Data", "CinemaSystem.Services.Data\CinemaSystem.Services.Data.csproj", "{389A9A15-0ED6-4DC9-9565-FE441DFEC447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaSystem.Services.Data", "CinemaSystem.Services.Data\CinemaSystem.Services.Data.csproj", "{389A9A15-0ED6-4DC9-9565-FE441DFEC447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaSystem.Web.Infrastructure", "CinemaSystem.Web.Infrastructure\CinemaSystem.Web.Infrastructure.csproj", "{056BC2D8-6DCF-403F-B365-EB30AFDD01A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaSystem.Web.Infrastructure", "CinemaSystem.Web.Infrastructure\CinemaSystem.Web.Infrastructure.csproj", "{056BC2D8-6DCF-403F-B365-EB30AFDD01A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{211123AB-AB15-4AC1-B133-C383B576EBAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaSystem.Services.Tests", "CinemaSystem.Services.Tests\CinemaSystem.Services.Tests.csproj", "{B3FC124C-82EC-4359-BDE0-C9C0E43716B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{056BC2D8-6DCF-403F-B365-EB30AFDD01A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{056BC2D8-6DCF-403F-B365-EB30AFDD01A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{056BC2D8-6DCF-403F-B365-EB30AFDD01A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3FC124C-82EC-4359-BDE0-C9C0E43716B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FC124C-82EC-4359-BDE0-C9C0E43716B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FC124C-82EC-4359-BDE0-C9C0E43716B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FC124C-82EC-4359-BDE0-C9C0E43716B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{B4FC4C89-9587-4965-8B5E-3B40A5A8708A} = {D9C75459-0927-4CCF-B0FF-2DBF010F98FD}
 		{389A9A15-0ED6-4DC9-9565-FE441DFEC447} = {9A6A6D22-E9E9-4F72-B080-D879457F408F}
 		{056BC2D8-6DCF-403F-B365-EB30AFDD01A3} = {D9C75459-0927-4CCF-B0FF-2DBF010F98FD}
+		{B3FC124C-82EC-4359-BDE0-C9C0E43716B8} = {211123AB-AB15-4AC1-B133-C383B576EBAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {391E6D95-CDAF-4A35-8FC0-1641F213B8F2}

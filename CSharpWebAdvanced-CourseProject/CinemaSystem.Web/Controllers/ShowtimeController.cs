@@ -32,11 +32,11 @@
             }
             try
             {
+                ShowtimeSelectViewModel viewModel = new ShowtimeSelectViewModel();
                 IEnumerable<DateTime> dates = await cinemaService.GetCinemaAvailableDatesAsync(cinemaId);
                 if (!dates.Any())
                 {
-                    TempData[ErrorMessage] = GeneralError;
-                    return RedirectToAction("Index", "Home");
+                    return View(viewModel);
                 }
 
                 if (string.IsNullOrEmpty(selectedDate))
@@ -47,7 +47,7 @@
                 DateTime date = DateTime.Parse(selectedDate);
                 IEnumerable<MovieShowtimeViewModel> movies = await showtimeService.GetMovieShowtimesForCinemaDateAsync(cinemaId, date);
 
-                ShowtimeSelectViewModel viewModel = new ShowtimeSelectViewModel
+                viewModel = new ShowtimeSelectViewModel
                 {
                     CinemaId = cinemaId,
                     SelectedDate = date.ToShortDateString(),

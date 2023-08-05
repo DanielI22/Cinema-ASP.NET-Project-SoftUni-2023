@@ -19,6 +19,7 @@
         }
 
         [AllowAnonymous]
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> All()
         {
             try

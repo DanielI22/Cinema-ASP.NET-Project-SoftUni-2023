@@ -19,7 +19,6 @@
             this.cinemaService = cinemaService;
         }
 
-        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
             try
@@ -88,15 +87,16 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, CinemaAddEditViewModel cinema)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(cinema);
-            }
             if (id == null)
             {
                 TempData[ErrorMessage] = GeneralError;
                 return RedirectToAction(nameof(Index));
             }
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
+
             try
             {
                 await cinemaService.EditCinemaAsync(id, cinema);
@@ -111,6 +111,11 @@
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
             try
             {
                 await cinemaService.DeleteCinemaAsync(id);

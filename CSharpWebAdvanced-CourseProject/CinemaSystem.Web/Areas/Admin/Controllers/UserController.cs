@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
 
     [Area(AdminArea)]
@@ -20,8 +21,16 @@
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<UserViewModel> users = await userService.GetUsersAsync();
-            return View(users);
+            try
+            {
+                IEnumerable<UserViewModel> users = await userService.GetUsersAsync();
+                return View(users);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         public IActionResult Add()
@@ -34,15 +43,22 @@
         {
             if (ModelState.IsValid)
             {
-                var result = await userService.AddUserAsync(user);
-
-                if (result.Succeeded)
+                try
                 {
-                    return RedirectToAction(nameof(Index));
+                    var result = await userService.AddUserAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
-                foreach (var error in result.Errors)
+                catch (Exception)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
                 }
             }
 
@@ -51,24 +67,59 @@
 
         public async Task<IActionResult> Edit(string id)
         {
-            UserEditViewModel? model = await userService.GetEditUserModelAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                UserEditViewModel? model = await userService.GetEditUserModelAsync(id);
+                if (model != null)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
+                }
 
-            return View(model);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, UserEditViewModel user)
         {
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
             if (ModelState.IsValid)
             {
-                var result = await userService.EditUserAsync(id, user);
-                if (result.Succeeded)
+                try
                 {
-                    return RedirectToAction(nameof(Index));
+                    var result = await userService.EditUserAsync(id, user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
-                foreach (var error in result.Errors)
+                catch (Exception)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
                 }
             }
 
@@ -78,7 +129,19 @@
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await userService.DeleteUserAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                await userService.DeleteUserAsync(id);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
     }

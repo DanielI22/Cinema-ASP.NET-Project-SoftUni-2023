@@ -21,17 +21,32 @@
             this.genreService = genreService;
         }
 
-        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();
-            return View(movies);
+            try
+            {
+                IEnumerable<MovieCardViewModel> movies = await movieService.GetAllMoviesCardAsync();
+                return View(movies);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         public async Task<IActionResult> Add()
         {
             var model = new MovieAddEditViewModel();
-            model.Genres = await genreService.GetGenresAsync();
+            try
+            {
+                model.Genres = await genreService.GetGenresAsync();
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View(model);
         }
 
@@ -42,8 +57,14 @@
             {
                 return View(movie);
             }
-
-            await movieService.AddMovieAsync(movie);
+            try
+            {
+                await movieService.AddMovieAsync(movie);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -87,27 +108,73 @@
 
         public async Task<IActionResult> Edit(string id)
         {
-            MovieAddEditViewModel? model = await movieService.GetEditMovieModelAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                MovieAddEditViewModel? model = await movieService.GetEditMovieModelAsync(id);
+                if (model != null)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
 
-            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, MovieAddEditViewModel movie)
         {
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
             if (!ModelState.IsValid)
             {
                 return View(movie);
             }
+            try
+            {
 
-            await movieService.EditMovieAsync(id, movie);
+                await movieService.EditMovieAsync(id, movie);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await movieService.DeleteMovieAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                await movieService.DeleteMovieAsync(id);
+
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
     }

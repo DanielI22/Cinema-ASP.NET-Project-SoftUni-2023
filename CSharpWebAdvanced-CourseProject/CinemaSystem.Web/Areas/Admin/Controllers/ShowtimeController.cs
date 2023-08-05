@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
 
     [Area(AdminArea)]
@@ -24,15 +25,31 @@
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ShowtimeDatailViewModel> showtimes = await showtimeService.GetShowtimesAsync();
-            return View(showtimes);
+            try
+            {
+                IEnumerable<ShowtimeDatailViewModel> showtimes = await showtimeService.GetShowtimesAsync();
+                return View(showtimes);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         public async Task<IActionResult> Add()
         {
             var model = new ShowtimeAddEditViewModel();
-            model.Movies = await movieService.GetAllShowtimeMoviesAsync();
-            model.Cinemas = await cinemaService.GetAllCinemasAsync();
+            try
+            {
+                model.Movies = await movieService.GetAllShowtimeMoviesAsync();
+                model.Cinemas = await cinemaService.GetAllCinemasAsync();
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View(model);
         }
 
@@ -43,34 +60,85 @@
             {
                 return View(showtime);
             }
-
-            await showtimeService.AddShowtimeAsync(showtime);
+            try
+            {
+                await showtimeService.AddShowtimeAsync(showtime);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            ShowtimeAddEditViewModel? model = await showtimeService.GetEditShowtimeModelAsync(id);
-
-            return View(model);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                ShowtimeAddEditViewModel? model = await showtimeService.GetEditShowtimeModelAsync(id);
+                if (model != null)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, ShowtimeAddEditViewModel showtime)
         {
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
             if (!ModelState.IsValid)
             {
                 return View(showtime);
             }
+            try
+            {
 
-            await showtimeService.EditShowtimeAsync(id, showtime);
+                await showtimeService.EditShowtimeAsync(id, showtime);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await showtimeService.DeleteShowtimeAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+
+                await showtimeService.DeleteShowtimeAsync(id);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
     }

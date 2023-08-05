@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static CinemaSystem.Common.GeneralApplicationConstants;
+    using static CinemaSystem.Common.NotificationMessagesConstants;
 
 
     [Area(AdminArea)]
@@ -20,14 +21,30 @@
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<TicketViewModel> tickets = await ticketService.GetTicketsAsync();
-            return View(tickets);
+            try
+            {
+                IEnumerable<TicketViewModel> tickets = await ticketService.GetTicketsAsync();
+                return View(tickets);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         public async Task<IActionResult> Add()
         {
-            var model = await ticketService.GetAddTicketModelAsync();
-            return View(model);
+            try
+            {
+                var model = await ticketService.GetAddTicketModelAsync();
+                return View(model);
+            }
+            catch
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction("Dashboard", "Admin");
+            }
         }
 
         [HttpPost]
@@ -37,34 +54,87 @@
             {
                 return View(ticket);
             }
+            try
+            {
 
-            await ticketService.AddTicketAsync(ticket);
+                await ticketService.AddTicketAsync(ticket);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            TicketAddEditViewModel? model = await ticketService.GetEditTicketModelAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                TicketAddEditViewModel? model = await ticketService.GetEditTicketModelAsync(id);
+                if (model != null)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = GeneralError;
+                    return RedirectToAction(nameof(Index));
+                }
 
-            return View(model);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, TicketAddEditViewModel ticket)
         {
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
             if (!ModelState.IsValid)
             {
                 return View(ticket);
             }
+            try
+            {
+                await ticketService.EditTicketAsync(id, ticket);
 
-            await ticketService.EditTicketAsync(id, ticket);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await ticketService.DeleteTicketAsync(id);
+            if (id == null)
+            {
+                TempData[ErrorMessage] = GeneralError;
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                await ticketService.DeleteTicketAsync(id);
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = GeneralError;
+            }
             return RedirectToAction(nameof(Index));
         }
     }
