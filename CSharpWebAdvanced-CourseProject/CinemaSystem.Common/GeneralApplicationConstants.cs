@@ -12,5 +12,6 @@
         public const string AdminArea = "Admin";
         public const string DevelopmentAdminEmail = "admin@admin";
         public const string GeneralError = "Unexpected error occurred! Please try again later or contact administrator";
+        public const string ApiMovieFormatError = "Invalid Movie format!";
     }
 }

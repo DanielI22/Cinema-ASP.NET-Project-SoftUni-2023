@@ -7,6 +7,7 @@
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -15,11 +16,13 @@
     {
         private readonly CinemaSystemDbContext dbContext;
         private readonly IMovieService movieService;
+        private readonly ILogger<ShowtimeService> logger;
 
-        public ShowtimeService(CinemaSystemDbContext dbContext, IMovieService movieService)
+        public ShowtimeService(CinemaSystemDbContext dbContext, IMovieService movieService, ILogger<ShowtimeService> logger)
         {
             this.dbContext = dbContext;
             this.movieService = movieService;
+            this.logger = logger;
         }
 
         public async Task AddShowtimeAsync(ShowtimeAddEditViewModel model)
@@ -45,6 +48,12 @@
             {
                 showtime.isActive = false;
             }
+            else
+            {
+                string error = "Showtime could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
             await dbContext.SaveChangesAsync();
         }
 
@@ -62,6 +71,12 @@
                 showtime.StartTime = model.StartTime;
 
                 await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                string error = "Genre could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
         }
 

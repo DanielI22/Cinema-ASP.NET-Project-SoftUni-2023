@@ -7,22 +7,26 @@
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using static CinemaSystem.Common.GeneralApplicationConstants;
 
     public class MovieService : IMovieService
     {
         private readonly CinemaSystemDbContext dbContext;
         private readonly IReviewService reviewService;
         private readonly IConfiguration configuration;
+        private readonly ILogger<MovieService> logger;
 
-        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService, IConfiguration configuration)
+        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService, IConfiguration configuration, ILogger<MovieService> logger)
         {
             this.dbContext = dbContext;
             this.reviewService = reviewService;
             this.configuration = configuration;
+            this.logger = logger;
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds)
@@ -194,6 +198,12 @@
 
                 await dbContext.SaveChangesAsync();
             }
+            else
+            {
+                string error = "Movie could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
         }
 
         public async Task DeleteMovieAsync(string id)
@@ -207,6 +217,12 @@
             if (movie != null)
             {
                 movie.isActive = false;
+            }
+            else
+            {
+                string error = "Movie could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
             await dbContext.SaveChangesAsync();
 
@@ -241,17 +257,21 @@
                     }
                     else
                     {
-                        throw new InvalidOperationException("Invalid movie format!");
+                        logger.LogError(ApiMovieFormatError);
+                        throw new InvalidOperationException(ApiMovieFormatError);
                     }
                 }
                 else
                 {
-                    throw new InvalidOperationException("Invalid movie format!");
+                    logger.LogError(ApiMovieFormatError);
+                    throw new InvalidOperationException(ApiMovieFormatError);
                 }
             }
             else
             {
-                throw new InvalidOperationException("No movie is found!");
+                string error = "No movie found!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
         }
 
@@ -277,17 +297,21 @@
                     }
                     else
                     {
-                        throw new InvalidOperationException("Invalid movie format!");
+                        logger.LogError(ApiMovieFormatError);
+                        throw new InvalidOperationException(ApiMovieFormatError);
                     }
                 }
                 else
                 {
-                    throw new InvalidOperationException("Invalid movie format!");
+                    logger.LogError(ApiMovieFormatError);
+                    throw new InvalidOperationException(ApiMovieFormatError);
                 }
             }
             else
             {
-                throw new InvalidOperationException("No movie is found!");
+                string error = "No movie found!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
         }
 

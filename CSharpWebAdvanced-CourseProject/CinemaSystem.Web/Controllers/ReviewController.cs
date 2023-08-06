@@ -20,6 +20,11 @@
         public async Task<IActionResult> Post(string movieId, string ReviewToAdd)
         {
             string reviewError = "Your Review could not be post. Sorry for the inconvenience!";
+            if (movieId == null)
+            {
+                TempData[ErrorMessage] = reviewError;
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -54,7 +59,7 @@
             if (reviewId == null || movieId == null)
             {
                 TempData[ErrorMessage] = reviewError;
-                return RedirectToAction("All", "Movies");
+                return RedirectToAction("Details", "Movie", new { id = movieId });
             }
             try
             {

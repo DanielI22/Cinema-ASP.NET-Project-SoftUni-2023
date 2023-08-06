@@ -6,6 +6,7 @@
     using CinemaSystem.Web.ViewModels.Ticket;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
     public class TicketService : ITicketService
@@ -13,12 +14,14 @@
         private readonly CinemaSystemDbContext dbContext;
         private readonly IShowtimeService showtimeService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<TicketService> logger;
 
-        public TicketService(CinemaSystemDbContext dbContext, IShowtimeService showtimeService, UserManager<ApplicationUser> userManager)
+        public TicketService(CinemaSystemDbContext dbContext, IShowtimeService showtimeService, UserManager<ApplicationUser> userManager, ILogger<TicketService> logger)
         {
             this.dbContext = dbContext;
             this.showtimeService = showtimeService;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task AddTicketAsync(TicketAddEditViewModel model)
@@ -44,6 +47,12 @@
             {
                 ticket.isActive = false;
             }
+            else
+            {
+                string error = "Ticket could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
             await dbContext.SaveChangesAsync();
         }
 
@@ -61,6 +70,12 @@
                 ticket.UserId = Guid.Parse(model.UserId);
 
                 await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                string error = "Ticket could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
         }
 
@@ -108,8 +123,12 @@
             {
                 return showtime.Tickets.Select(t => int.Parse(t.SeatNumber)).ToList();
             }
-
-            return new List<int>();
+            else
+            {
+                string error = "Showtime could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
         }
 
         public async Task<IEnumerable<TicketViewModel>> GetTicketsAsync()

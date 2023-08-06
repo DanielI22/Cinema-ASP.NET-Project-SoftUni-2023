@@ -6,14 +6,17 @@
     using CinemaSystem.Web.ViewModels.Genre;
     using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class GenreService : IGenreService
     {
         private readonly CinemaSystemDbContext dbContext;
+        private readonly ILogger<GenreService> logger;
 
-        public GenreService(CinemaSystemDbContext dbContext)
+        public GenreService(CinemaSystemDbContext dbContext, ILogger<GenreService> logger)
         {
             this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         public async Task AddGenreAsync(GenreAddEditViewModel model)
@@ -36,6 +39,12 @@
             {
                 genre.isActive = false;
             }
+            else
+            {
+                string error = "Genre could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
             await dbContext.SaveChangesAsync();
         }
 
@@ -48,6 +57,12 @@
             {
                 genre.Name = model.Name;
                 await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                string error = "Cinema could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
             }
         }
 

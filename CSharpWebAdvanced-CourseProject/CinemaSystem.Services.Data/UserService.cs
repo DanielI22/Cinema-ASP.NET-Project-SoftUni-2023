@@ -6,19 +6,20 @@
     using CinemaSystem.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using static CinemaSystem.Common.GeneralApplicationConstants;
 
     public class UserService : IUserService
     {
-        private readonly CinemaSystemDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<UserService> logger;
 
-        public UserService(CinemaSystemDbContext dbContext, UserManager<ApplicationUser> userManager)
+        public UserService(UserManager<ApplicationUser> userManager, ILogger<UserService> logger)
         {
-            this.dbContext = dbContext;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task<IdentityResult> AddUserAsync(UserAddViewModel model)
@@ -47,11 +48,23 @@
             {
                 await userManager.DeleteAsync(user);
             }
+            else
+            {
+                string error = "User could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
         }
 
         public async Task<IdentityResult> EditUserAsync(string id, UserEditViewModel model)
         {
-            var user = await userManager.FindByIdAsync(id) ?? throw new InvalidOperationException("User is not found");
+            var user = await userManager.FindByIdAsync(id);
+            if ( user == null)
+            {
+                string error = "Genre could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
             user.UserName = model.Username;
             user.Email = model.Email;
 
@@ -83,6 +96,12 @@
         public async Task<UserEditViewModel?> GetEditUserModelAsync(string id)
         {
             var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                string error = "User could not be found in the database!";
+                logger.LogError(error);
+                throw new InvalidOperationException(error);
+            }
             var isAdmin = await userManager.IsInRoleAsync(user, AdminRoleName);
             var userModel = new UserEditViewModel
             {

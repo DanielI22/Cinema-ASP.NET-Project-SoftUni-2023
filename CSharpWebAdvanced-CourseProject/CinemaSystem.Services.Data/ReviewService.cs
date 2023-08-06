@@ -4,6 +4,7 @@
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Review;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Threading.Tasks;
     using Review = CinemaSystem.Data.Models.Review;
@@ -11,10 +12,13 @@
     public class ReviewService : IReviewService
     {
         private readonly CinemaSystemDbContext dbContext;
+        private readonly ILogger<ReviewService> logger;
 
-        public ReviewService(CinemaSystemDbContext dbContext)
+
+        public ReviewService(CinemaSystemDbContext dbContext, ILogger<ReviewService> logger)
         {
             this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         public async Task DeleteReviewAsync(string reviewId)
@@ -29,7 +33,8 @@
             Review? review = await dbContext.Reviews.FirstOrDefaultAsync(r => r.Id.ToString() == reviewId);
             if (review == null)
             {
-                throw new InvalidOperationException("Review not found");
+                logger.LogError("Review not found!");
+                throw new InvalidOperationException("Review not found!");
             }
             return review;
         }
