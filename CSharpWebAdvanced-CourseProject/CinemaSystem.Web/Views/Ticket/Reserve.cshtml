@@ -44,10 +44,15 @@
 @section Scripts {
     <script>
         var selectedSeats = [];
+        var showtimeId = @Model.ShowtimeId;
 
         $(document).ready(function () {
             $('.seat').on('click', handleSeatSelection);
             $('#finishReservation').on('click', finishReservation);
         });
+
+        setInterval(function () {
+            updateSeatAvailability(showtimeId);
+        }, 5000);
     </script>
 }

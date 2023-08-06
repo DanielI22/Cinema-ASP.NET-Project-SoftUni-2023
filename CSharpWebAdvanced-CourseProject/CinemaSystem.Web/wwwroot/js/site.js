@@ -1,4 +1,32 @@
-﻿function handleSeatSelection() {
+﻿function updateSeatAvailability(showtimeId) {
+    $.ajax({
+        url: '/Ticket/GetSeats?showtimeId=' + showtimeId,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var reservedSeats = data;
+            $('.seat').each(function () {
+                var seatId = $(this).data('seat-id');
+                var isReserved = reservedSeats.includes(seatId);
+                if (isReserved) {
+                    $(this).addClass('seat reserved');
+                    if (selectedSeats.includes(seatId)) {
+                        $('.seat').removeClass('selected');
+                        $('#finishReservation').attr('disabled', true);
+                        selectedSeats = [];
+                    }
+                } else {
+                    $(this).removeClass('seat reserved');
+                    $(this).addClass('seat');
+                }
+            });
+        },
+        error: function (error) {
+            console.error('Error checking seat availability: ', error);
+        }
+    });
+}
+function handleSeatSelection() {
     var seatId = $(this).data('seat-id');
     var reserved = $(this).hasClass('reserved');
 

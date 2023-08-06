@@ -21,6 +21,12 @@
             this.ticketService = ticketService;
         }
 
+        public async Task<IActionResult> GetSeatsAsync(string showtimeId)
+        {
+            var seats = await ticketService.GetSelectedSeatsAsync(showtimeId);
+            return Json(seats);
+        }
+
         public async Task<IActionResult> Reserve(string showtimeId)
         {
             if (showtimeId == null)
