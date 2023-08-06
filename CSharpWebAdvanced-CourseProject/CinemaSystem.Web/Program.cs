@@ -27,6 +27,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddApplicationServices(typeof(ICinemaService));
 builder.Services.AddResponseCaching();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>

@@ -3,6 +3,7 @@
     using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Review;
+    using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using System;
@@ -41,6 +42,8 @@
 
         public async Task PostReviewAsync(string movieId, string userId, string reviewText)
         {
+            var sanitizer = new HtmlSanitizer();
+            reviewText = sanitizer.Sanitize(reviewText);
             Review review = new Review
             {
                 MovieId = Guid.Parse(movieId),

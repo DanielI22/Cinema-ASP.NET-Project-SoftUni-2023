@@ -6,6 +6,7 @@
     using CinemaSystem.Web.ViewModels.Movie;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
@@ -20,13 +21,15 @@
         private readonly IReviewService reviewService;
         private readonly IConfiguration configuration;
         private readonly ILogger<MovieService> logger;
+        private readonly IMemoryCache memoryCache;
 
-        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService, IConfiguration configuration, ILogger<MovieService> logger)
+        public MovieService(CinemaSystemDbContext dbContext, IReviewService reviewService, IConfiguration configuration, ILogger<MovieService> logger, IMemoryCache memoryCache)
         {
             this.dbContext = dbContext;
             this.reviewService = reviewService;
             this.configuration = configuration;
             this.logger = logger;
+            this.memoryCache = memoryCache;
         }
 
         public async Task<IEnumerable<MovieCardViewModel>> GetMovieCardsForMovieIdsAsync(List<string> movieIds)
@@ -70,21 +73,27 @@
 
         public async Task<IEnumerable<MovieCardViewModel>> GetAllMoviesCardAsync()
         {
-            return await dbContext.Movies
-                .Where(m => m.isActive)
-                .Include(m => m.MovieGenres)
-                .ThenInclude(mg => mg.Genre)
-                .Select(m => new MovieCardViewModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    PosterUrl = m.PosterImageUrl,
-                    Genres = m.MovieGenres.Select(mg => new GenreViewModel
+            if (!memoryCache.TryGetValue(MovieCacheValue, out IEnumerable<MovieCardViewModel> movies))
+            {
+                movies = await dbContext.Movies
+                    .Where(m => m.isActive)
+                    .Include(m => m.MovieGenres)
+                    .ThenInclude(mg => mg.Genre)
+                    .Select(m => new MovieCardViewModel
                     {
-                        Id = mg.GenreId,
-                        Name = mg.Genre.Name
-                    })
-                }).ToListAsync();
+                        Id = m.Id,
+                        Title = m.Title,
+                        PosterUrl = m.PosterImageUrl,
+                        Genres = m.MovieGenres.Select(mg => new GenreViewModel
+                        {
+                            Id = mg.GenreId,
+                            Name = mg.Genre.Name
+                        })
+                    }).ToListAsync();
+
+                memoryCache.Set(MovieCacheValue, movies, TimeSpan.FromMinutes(5));
+            }
+            return movies;
 
         }
 
@@ -143,6 +152,7 @@
 
             await dbContext.Movies.AddAsync(movie);
             await dbContext.SaveChangesAsync();
+            memoryCache.Remove(MovieCacheValue);
         }
 
         public async Task<MovieAddEditViewModel?> GetEditMovieModelAsync(string id)
@@ -197,6 +207,7 @@
                 }
 
                 await dbContext.SaveChangesAsync();
+                memoryCache.Remove(MovieCacheValue);
             }
             else
             {
@@ -225,6 +236,7 @@
                 throw new InvalidOperationException(error);
             }
             await dbContext.SaveChangesAsync();
+            memoryCache.Remove(MovieCacheValue);
 
         }
 
