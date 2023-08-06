@@ -2,7 +2,6 @@
 {
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data.Interfaces;
-    using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -59,7 +58,7 @@
         public async Task<IdentityResult> EditUserAsync(string id, UserEditViewModel model)
         {
             var user = await userManager.FindByIdAsync(id);
-            if ( user == null)
+            if (user == null)
             {
                 string error = "Genre could not be found in the database!";
                 logger.LogError(error);

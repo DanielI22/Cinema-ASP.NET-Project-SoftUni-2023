@@ -265,7 +265,7 @@
                     MovieApiModel movieModel = JsonConvert.DeserializeObject<MovieApiModel>(content)!;
                     if (movieModel.Title != null && movieModel.Year != null)
                     {
-                        await ConvertApiModelToMovie(movieModel);
+                        await AddApiMovie(movieModel);
                     }
                     else
                     {
@@ -305,7 +305,7 @@
                     MovieApiModel movieModel = JsonConvert.DeserializeObject<MovieApiModel>(content)!;
                     if (movieModel.Title != null && movieModel.Year != null)
                     {
-                        await ConvertApiModelToMovie(movieModel);
+                        await AddApiMovie(movieModel);
                     }
                     else
                     {
@@ -327,7 +327,7 @@
             }
         }
 
-        private async Task ConvertApiModelToMovie(MovieApiModel movieApiModel)
+        private async Task AddApiMovie(MovieApiModel movieApiModel)
         {
             var movie = new Movie
             {
@@ -371,6 +371,7 @@
             }
             dbContext.Movies.Add(movie);
             await dbContext.SaveChangesAsync();
+            memoryCache.Remove(MovieCacheValue);
         }
     }
 }
