@@ -150,6 +150,7 @@
         {
             IEnumerable<ShowtimeViewModel> showtimes = dbContext.Showtimes
             .Where(s => s.MovieId == movieId && s.CinemaId == cinemaId && s.StartTime.Date == date.Date && s.isActive)
+            .OrderBy(s => s.StartTime)
             .Select(s => new ShowtimeViewModel
             {
                 Id = s.Id.ToString(),

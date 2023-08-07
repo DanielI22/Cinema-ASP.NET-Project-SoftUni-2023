@@ -80,3 +80,4 @@ app.UseEndpoints(endpoints =>
 app.MapRazorPages();
 
 await app.RunAsync();
+public partial class Program { }

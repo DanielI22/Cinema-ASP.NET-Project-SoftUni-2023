@@ -25,7 +25,8 @@ namespace CinemaSystem.Data.Migrations
                 {
                     { 1, "Biography" },
                     { 2, "Drama" },
-                    { 3, "Action" }
+                    { 3, "Action" },
+                    { 4, "Adventure" }
                 });
 
             migrationBuilder.InsertData(
@@ -55,28 +56,28 @@ namespace CinemaSystem.Data.Migrations
                 {
                     { 1, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
                     { 2, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 3, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 4, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 5, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 6, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 7, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 8, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 9, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 10, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 11, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 12, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 13, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 14, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 15, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 16, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 17, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 18, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 19, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 20, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 21, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 22, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 15m },
-                    { 23, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 12, 30, 0, 0, DateTimeKind.Unspecified), 12m },
-                    { 24, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m }
+                    { 3, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 10, 30, 0, 0, DateTimeKind.Unspecified), 10m },
+                    { 4, 1, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 14, 30, 0, 0, DateTimeKind.Unspecified), 12m },
+                    { 5, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 13m },
+                    { 6, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 14m },
+                    { 7, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 10, 30, 0, 0, DateTimeKind.Unspecified), 11m },
+                    { 8, 2, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 14, 30, 0, 0, DateTimeKind.Unspecified), 18m },
+                    { 9, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 16m },
+                    { 10, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 2, 18, 30, 0, 0, DateTimeKind.Unspecified), 12m },
+                    { 11, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 10, 30, 0, 0, DateTimeKind.Unspecified), 11m },
+                    { 12, 3, new Guid("ab758330-8d53-4c59-b77c-bca379c1d8b7"), new DateTime(2023, 9, 3, 14, 30, 0, 0, DateTimeKind.Unspecified), 11m },
+                    { 13, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 14, 30, 0, 0, DateTimeKind.Unspecified), 10m },
+                    { 14, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 20, 30, 0, 0, DateTimeKind.Unspecified), 15m },
+                    { 15, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 16, 30, 0, 0, DateTimeKind.Unspecified), 12m },
+                    { 16, 1, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 22, 30, 0, 0, DateTimeKind.Unspecified), 12m },
+                    { 17, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 14, 30, 0, 0, DateTimeKind.Unspecified), 15m },
+                    { 18, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 20, 30, 0, 0, DateTimeKind.Unspecified), 15m },
+                    { 19, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 16, 30, 0, 0, DateTimeKind.Unspecified), 10m },
+                    { 20, 2, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 22, 30, 0, 0, DateTimeKind.Unspecified), 12m },
+                    { 21, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 14, 30, 0, 0, DateTimeKind.Unspecified), 15m },
+                    { 22, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 2, 20, 30, 0, 0, DateTimeKind.Unspecified), 13m },
+                    { 23, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 16, 30, 0, 0, DateTimeKind.Unspecified), 14m },
+                    { 24, 3, new Guid("a622d82d-aed0-44d9-9f4c-577418ca1172"), new DateTime(2023, 9, 3, 22, 30, 0, 0, DateTimeKind.Unspecified), 12m }
                 });
         }
 

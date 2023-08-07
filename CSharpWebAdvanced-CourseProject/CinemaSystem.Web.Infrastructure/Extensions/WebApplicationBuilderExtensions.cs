@@ -63,7 +63,9 @@
 
             Task.Run(async () =>
             {
-                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                ApplicationUser adminUser =
+                await userManager.FindByEmailAsync(email);
+                if (await roleManager.RoleExistsAsync(AdminRoleName) || adminUser == null)
                 {
                     return;
                 }
@@ -73,8 +75,7 @@
 
                 await roleManager.CreateAsync(role);
 
-                ApplicationUser adminUser =
-                    await userManager.FindByEmailAsync(email);
+
 
                 await userManager.AddToRoleAsync(adminUser, AdminRoleName);
             })

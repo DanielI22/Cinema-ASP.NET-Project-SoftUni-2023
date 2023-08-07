@@ -7,10 +7,12 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+	<PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="NUnit" Version="3.13.3" />
@@ -24,7 +26,9 @@
     <ProjectReference Include="..\CinemaSystem.Data.Models\CinemaSystem.Data.Models.csproj" />
     <ProjectReference Include="..\CinemaSystem.Data\CinemaSystem.Data.csproj" />
     <ProjectReference Include="..\CinemaSystem.Services.Data\CinemaSystem.Services.Data.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Web.Infrastructure\CinemaSystem.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CinemaSystem.Web.ViewModels\CinemaSystem.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\CinemaSystem.Web\CinemaSystem.Web.csproj" />
   </ItemGroup>
 
 </Project>
