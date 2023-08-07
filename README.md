@@ -23,10 +23,10 @@ Manual for using
 
 Cinema System is a web application designed to streamline the movie-going experience by providing users with the ability to browse, select, and reserve seats for movie showtimes at various cinemas. The application offers features such as:
 
-*Browse available cinemas and movies.
-*View detailed movie information, including showtimes and plot.
-*Reserve seats for desired showtimes.
-*User-friendly interface for both customers and administrators.
+* Browse available cinemas and movies.
+* View detailed movie information, including showtimes and plot.
+* Reserve seats for desired showtimes.
+* User-friendly interface for both customers and administrators.
 
 The application is built using ASP.NET Core, Entity Framework Core, and Bootstrap, providing a responsive and modern user experience. It incorporates features like user authentication, caching, and real-time seat availability updates.
 
