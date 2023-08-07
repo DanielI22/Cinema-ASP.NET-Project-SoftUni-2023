@@ -37,5 +37,5 @@ The application is built using ASP.NET Core, Entity Framework Core, and Bootstra
 * Seat Reservation: Customers can select their desired movie showtimes and reserve seats from an interactive seating chart.
 * Real-Time Updates: Users receive real-time updates on seat availability, ensuring an accurate and dynamic booking process.
 * Admin Dashboard: Administrators have access to a dedicated dashboard to manage cinemas, movies, and showtimes.
-A*PI movie adding: Administrators, apart from manually, can add movies through omdbapi with given title and/or year, or by providing the Imdb movie id.
+* API movie adding: Administrators, apart from manually, can add movies through omdbapi with a given title and/or year, or by providing the Imdb movie Id.
 Security: Role-based authentication ensures secure access to various parts of the application.
