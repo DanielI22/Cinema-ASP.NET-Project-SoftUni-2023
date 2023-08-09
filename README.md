@@ -21,7 +21,7 @@ Manual for using
 * To seed an admin - Register a new user with email admin@admin, log out, and restart the application. After logging in you will have access to the admin dashboard.
 
 
-Cinema System is a web application designed to streamline the movie-going experience by providing users with the ability to browse, select, and reserve seats for movie showtimes at various cinemas. The application offers features such as:
+Cinemania is a web application designed to streamline the movie-going experience by providing users with the ability to browse, select, and reserve seats for movie showtimes at various cinemas. The application offers features such as:
 
 * Browse available cinemas and movies.
 * View detailed movie information, including showtimes and plot.
