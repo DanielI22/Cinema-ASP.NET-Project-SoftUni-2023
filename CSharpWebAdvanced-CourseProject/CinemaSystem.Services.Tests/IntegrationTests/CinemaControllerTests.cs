@@ -1,9 +1,9 @@
-﻿namespace CinemaSystem.Services.Tests
+﻿namespace CinemaSystem.Services.Tests.IntegrationTests
 {
     using Microsoft.AspNetCore.Mvc.Testing;
 
     [TestFixture]
-    public class ControllerIntegrationTests
+    public class CinemaControllerTests
     {
         private WebApplicationFactory<Program> factory;
         private HttpClient client;

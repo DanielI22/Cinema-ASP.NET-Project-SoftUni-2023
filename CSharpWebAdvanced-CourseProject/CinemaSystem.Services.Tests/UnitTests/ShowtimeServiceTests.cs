@@ -1,13 +1,13 @@
-﻿namespace CinemaSystem.Services.Tests
+﻿namespace CinemaSystem.Services.Tests.UnitTests
 {
-    using CinemaSystem.Services.Data.Interfaces;
+    using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data;
+    using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Showtime;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Moq;
-    using CinemaSystem.Data.Models;
 
     [TestFixture]
     public class ShowtimeServiceTests

@@ -1,13 +1,10 @@
-﻿namespace CinemaSystem.Services.Tests
+﻿namespace CinemaSystem.Services.Tests.UnitTests
 {
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data;
-    using CinemaSystem.Services.Data.Interfaces;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Genre;
-    using CinemaSystem.Web.ViewModels.Movie;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
     using Moq;
 

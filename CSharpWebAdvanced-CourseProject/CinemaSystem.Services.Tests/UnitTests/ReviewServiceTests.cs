@@ -1,4 +1,4 @@
-﻿namespace CinemaSystem.Services.Tests
+﻿namespace CinemaSystem.Services.Tests.UnitTests
 {
     using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data;

@@ -1,6 +1,5 @@
-namespace CinemaSystem.Services.Tests
+namespace CinemaSystem.Services.Tests.UnitTests
 {
-    using CinemaSystem.Data.Models;
     using CinemaSystem.Services.Data;
     using CinemaSystem.Web.Data;
     using CinemaSystem.Web.ViewModels.Cinema;
@@ -10,7 +9,6 @@ namespace CinemaSystem.Services.Tests
     using Moq;
     using NUnit.Framework;
     using System.Collections.Generic;
-    using static CinemaSystem.Common.EntityValidationConstants;
     using static CinemaSystem.Common.GeneralApplicationConstants;
     using Cinema = CinemaSystem.Data.Models.Cinema;
     using Showtime = CinemaSystem.Data.Models.Showtime;
@@ -64,7 +62,7 @@ namespace CinemaSystem.Services.Tests
         {
             // Arrange
             var cinemaId = 1;
-            var cinema = new CinemaSystem.Data.Models.Cinema { Id = cinemaId, Address = "New", Name = "Name", isActive = true };
+            var cinema = new Cinema { Id = cinemaId, Address = "New", Name = "Name", isActive = true };
             dbContext.Cinemas.Add(cinema);
             dbContext.SaveChanges();
 
@@ -88,7 +86,7 @@ namespace CinemaSystem.Services.Tests
             var updatedAddress = "New Address";
             var updatedImageUrl = "new_image_url.jpg";
 
-            var cinema = new CinemaSystem.Data.Models.Cinema
+            var cinema = new Cinema
             {
                 Id = cinemaId,
                 Name = originalName,
