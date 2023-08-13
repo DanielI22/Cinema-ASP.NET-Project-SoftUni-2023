@@ -121,7 +121,7 @@
 
             if (showtime != null)
             {
-                return showtime.Tickets.Select(t => int.Parse(t.SeatNumber)).ToList();
+                return showtime.Tickets.Where(t => t.isActive).Select(t => int.Parse(t.SeatNumber)).ToList();
             }
             else
             {
@@ -158,7 +158,7 @@
             }
             foreach (var seat in selectedSeats)
             {
-                if (dbContext.Tickets.Any(t => t.ShowtimeId.ToString() == showtimeId && t.SeatNumber == seat.ToString()))
+                if (dbContext.Tickets.Any(t => t.isActive && t.ShowtimeId.ToString() == showtimeId && t.SeatNumber == seat.ToString()))
                 {
                     throw new InvalidOperationException("Seat already reserved!");
                 }
