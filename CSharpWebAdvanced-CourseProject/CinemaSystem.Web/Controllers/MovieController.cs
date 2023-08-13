@@ -46,7 +46,6 @@
         }
 
         [AllowAnonymous]
-        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> All([FromQuery] MoviesViewModel moviesViewModel)
         {
             try
